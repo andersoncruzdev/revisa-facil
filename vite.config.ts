@@ -16,6 +16,8 @@ export default defineConfig({
       "@services": srcPath("services"),
       "@shared": srcPath("shared"),
       "@test": srcPath("test"),
+      "@types-app": srcPath("types"),
+      "@utils": srcPath("utils"),
     },
   },
   plugins: [react(), tailwindcss()],

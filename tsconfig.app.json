@@ -29,7 +29,11 @@
       "@shared": ["./src/shared"],
       "@shared/*": ["./src/shared/*"],
       "@test": ["./src/test"],
-      "@test/*": ["./src/test/*"]
+      "@test/*": ["./src/test/*"],
+      "@types-app": ["./src/types"],
+      "@types-app/*": ["./src/types/*"],
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"]
     },
     "noEmit": true,
     "jsx": "react-jsx",
