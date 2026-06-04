@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import type { ContentRevision, Classroom, StudyDate } from "@types-app/study";
 import { formatDateBR } from "@utils/transformDate";
 import Badge from "./Badge";
+import IconButton from "./IconButton";
 
 interface ClassContentStudyProps {
   readonly materia: Classroom;
@@ -83,14 +84,13 @@ export default function ClassContentStudy({
           </p>
         </div>
       </div>
-      <button
-        type="button"
+      <IconButton
         onClick={concluir}
-        aria-label={`Concluir revisão de ${conteudo.name}`}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-700 text-white hover:bg-blue-800"
+        ariaLabel={`Concluir revisão de ${conteudo.name}`}
+        variant="primary"
       >
         <Check aria-hidden="true" className="h-5 w-5" />
-      </button>
+      </IconButton>
     </section>
   );
 }
