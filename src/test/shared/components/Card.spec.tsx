@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { CalendarCheck } from "lucide-react";
-import Card from "../../../shared/components/Card";
+import Card from "@shared/components/Card";
 
 describe("Testes de verificação do 'Card'", () => {
   it("renderiza o nome, a quantidade e o ícone", () => {

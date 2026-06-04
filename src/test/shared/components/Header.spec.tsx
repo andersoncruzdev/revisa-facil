@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import HeaderComponent from "../../../shared/components/Header";
+import HeaderComponent from "@shared/components/Header";
 
 describe("Testes de verificação do 'HeaderComponente'", () => {
   it("verifica se renderiza corretamente", () => {

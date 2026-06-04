@@ -1,14 +1,28 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+const srcPath = (path: string) => new URL(`./src/${path}`, import.meta.url).pathname;
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@app": srcPath("app"),
+      "@assets": srcPath("assets"),
+      "@features": srcPath("features"),
+      "@hooks": srcPath("hooks"),
+      "@pages": srcPath("pages"),
+      "@services": srcPath("services"),
+      "@shared": srcPath("shared"),
+      "@test": srcPath("test"),
+    },
+  },
   plugins: [react(), tailwindcss()],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/test/setup.ts',
+    environment: "jsdom",
+    setupFiles: "./src/test/setup.ts",
     css: true,
   },
-})
+});

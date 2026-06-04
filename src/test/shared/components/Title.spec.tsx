@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Title from "../../../shared/components/Title";
+import Title from "@shared/components/Title";
 
 describe("Testes de verificação do 'Title'", () => {
   it.each([

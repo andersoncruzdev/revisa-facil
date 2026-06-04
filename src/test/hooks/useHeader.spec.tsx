@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useHeader } from "../../hooks/useHeader";
+import { useHeader } from "@hooks/useHeader";
 
 describe("Teste do 'useHeader'", () => {
   it.each([

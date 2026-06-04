@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { CalendarCheck, Clock } from "lucide-react";
-import type { CardProps } from "../../../../shared/components/Card";
-import Revisions from "../../../../features/Dashboard/components/Revisions";
+import Revisions from "@features/Dashboard/components/Revisions";
+import type { CardProps } from "@shared/components/Card";
 
 describe("Testes de verificação do 'Revisions'", () => {
   it("renderiza a lista de cards recebida por props", () => {

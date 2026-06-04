@@ -1,5 +1,5 @@
 import { BookOpen } from "lucide-react";
-import { useHeader } from "../../hooks/useHeader";
+import { useHeader } from "@hooks/useHeader";
 
 type NavigationBtn = {
   name: string;

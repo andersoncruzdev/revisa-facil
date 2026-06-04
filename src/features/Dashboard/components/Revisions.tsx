@@ -1,5 +1,5 @@
-import type { CardProps } from "../../../shared/components/Card";
-import Card from "../../../shared/components/Card";
+import type { CardProps } from "@shared/components/Card";
+import Card from "@shared/components/Card";
 
 interface RevisionsProps {
   readonly items: readonly CardProps[];
