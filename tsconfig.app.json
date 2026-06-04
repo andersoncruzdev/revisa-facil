@@ -12,6 +12,7 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom/vitest"],
     "noEmit": true,
     "jsx": "react-jsx",
 
