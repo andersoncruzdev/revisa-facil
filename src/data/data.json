@@ -1,0 +1,100 @@
+{
+  "classrooms": [
+    {
+      "id": "matematica",
+      "title": "Matemática",
+      "color": "#2563eb",
+      "amountContent": 2,
+      "contents": [
+        {
+          "id": "mat-funcoes",
+          "name": "Funções do 1º grau",
+          "studied": "2026-06-03",
+          "revised": null,
+          "nextRevision": "today",
+          "tipoRevisao": "D+1"
+        },
+        {
+          "id": "mat-probabilidade",
+          "name": "Probabilidade básica",
+          "studied": "2026-05-20",
+          "revised": "2026-05-21",
+          "nextRevision": "2026-06-02",
+          "tipoRevisao": "D+14"
+        }
+      ]
+    },
+    {
+      "id": "historia",
+      "title": "História",
+      "color": "#16a34a",
+      "amountContent": 2,
+      "contents": [
+        {
+          "id": "his-revolucao-francesa",
+          "name": "Revolução Francesa",
+          "studied": "2026-06-03",
+          "revised": null,
+          "nextRevision": "today",
+          "tipoRevisao": "D+1"
+        },
+        {
+          "id": "his-brasil-colonia",
+          "name": "Brasil Colônia",
+          "studied": "2026-05-28",
+          "revised": "2026-05-29",
+          "nextRevision": "2026-06-05",
+          "tipoRevisao": "D+7"
+        }
+      ]
+    },
+    {
+      "id": "geografia",
+      "title": "Geografia",
+      "color": "#ea580c",
+      "amountContent": 2,
+      "contents": [
+        {
+          "id": "geo-climas",
+          "name": "Climas do Brasil",
+          "studied": "2026-05-25",
+          "revised": "2026-05-26",
+          "nextRevision": "2026-06-02",
+          "tipoRevisao": "D+7"
+        },
+        {
+          "id": "geo-cartografia",
+          "name": "Cartografia",
+          "studied": "2026-05-18",
+          "revised": "2026-05-19",
+          "nextRevision": "2026-06-12",
+          "tipoRevisao": "D+14"
+        }
+      ]
+    },
+    {
+      "id": "biologia",
+      "title": "Biologia",
+      "color": "#7c3aed",
+      "amountContent": 2,
+      "contents": [
+        {
+          "id": "bio-citologia",
+          "name": "Citologia",
+          "studied": "2026-06-01",
+          "revised": null,
+          "nextRevision": "2026-06-08",
+          "tipoRevisao": "D+7"
+        },
+        {
+          "id": "bio-genetica",
+          "name": "Genética mendeliana",
+          "studied": "2026-05-20",
+          "revised": "2026-05-21",
+          "nextRevision": "2026-06-15",
+          "tipoRevisao": "D+14"
+        }
+      ]
+    }
+  ]
+}
