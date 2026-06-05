@@ -39,16 +39,16 @@ export default function CardClassroom({
         className="flex items-center gap-2"
       >
         <Button.Root
-          aria-label={`Concluir revisão de ${materia.title}`}
+          aria-label={`Editar matéria ${materia.title}`}
           color="slate"
           onClick={actions.edit}
         >
           <Button.Icon icon={Pencil} size="15" />
         </Button.Root>
         <Button.Root
-          aria-label={`Concluir revisão de ${materia.title}`}
+          aria-label={`Excluir matéria ${materia.title}`}
           color="red"
-          onClick={actions.edit}
+          onClick={actions.delete}
         >
           <Button.Icon icon={Trash2} size="15" />
         </Button.Root>
