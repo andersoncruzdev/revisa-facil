@@ -1,6 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import type { Classroom } from "@types-app/study";
-import Badge from "./Badge";
+import Badge from "../components/Badge";
+import { Card } from "../components/Card/index";
 import { Button } from "@shared/components/Button";
 
 interface CardClassroomProps {
@@ -18,26 +19,25 @@ export default function CardClassroom({
   const contentLabel = materia.amountContent === 1 ? "conteúdo" : "conteúdos";
 
   return (
-    <section
-      aria-label={`Card da matéria ${materia.title}`}
-      className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+    <Card.Root
+      name={`matéria ${materia.title}`}
+      ariaLabel={`Card da matéria ${materia.title}`}
     >
       <div className="flex min-w-0 items-center gap-3">
-        <Badge
-          color={materia.color}
-          ariaLabel={`Cor da matéria ${materia.title}`}
-        />
-        <div>
-          <p className="font-semibold text-slate-950">{materia.title}</p>
-          <p className="text-sm text-slate-600">
+        <Card.Header>
+          <Badge
+            color={materia.color}
+            ariaLabel={`Cor da matéria ${materia.title}`}
+          />
+        </Card.Header>
+        <div className="min-w-0">
+          <Card.Title>{materia.title}</Card.Title>
+          <Card.Details>
             {materia.amountContent} {contentLabel}
-          </p>
+          </Card.Details>
         </div>
       </div>
-      <div
-        aria-label={`Ações da matéria ${materia.title}`}
-        className="flex items-center gap-2"
-      >
+      <Card.Actions ariaLabel={`Ações da matéria ${materia.title}`}>
         <Button.Root
           aria-label={`Editar matéria ${materia.title}`}
           color="slate"
@@ -52,7 +52,7 @@ export default function CardClassroom({
         >
           <Button.Icon icon={Trash2} size="15" />
         </Button.Root>
-      </div>
-    </section>
+      </Card.Actions>
+    </Card.Root>
   );
 }
