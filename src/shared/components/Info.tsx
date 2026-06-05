@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
-export interface CardProps {
+export interface InfoProps {
   readonly icon: ReactNode;
   readonly name: string;
   readonly quantity: number;
 }
 
-export default function Card({ icon, name, quantity }: CardProps) {
+export default function Info({ icon, name, quantity }: InfoProps) {
   return (
     <article className="flex h-full flex-col justify-between rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between gap-4">

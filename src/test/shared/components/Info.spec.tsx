@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { CalendarCheck } from "lucide-react";
-import Card from "@shared/components/Card";
+import Info from "@shared/components/Info";
 
 describe("Testes de verificação do 'Card'", () => {
   it("renderiza o nome, a quantidade e o ícone", () => {
     render(
-      <Card
+      <Info
         name="Revisões de hoje"
         quantity={4}
         icon={<CalendarCheck data-testid="card-icon" aria-hidden="true" />}
@@ -19,7 +19,7 @@ describe("Testes de verificação do 'Card'", () => {
 
   it("aplica a estrutura visual do card", () => {
     render(
-      <Card
+      <Info
         name="Conteúdos pendentes"
         quantity={7}
         icon={<CalendarCheck aria-hidden="true" />}
