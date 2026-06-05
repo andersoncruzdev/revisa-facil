@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ClassContentStudy from "@shared/components/ClassContentStudy";
+import ClassContentStudy from "@shared/design-system/ClassContentStudy";
 import type { ContentRevision, Classroom } from "@types-app/study";
 import userEvent from "@testing-library/user-event";
 

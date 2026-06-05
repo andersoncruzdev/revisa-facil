@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import CardContent from "@shared/components/CardContent";
+import CardContent from "@shared/design-system/CardContent";
 import type { Content, Classroom } from "@types-app/study";
 
 const materia = {
