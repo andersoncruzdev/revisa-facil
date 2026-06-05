@@ -1,7 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import type { Classroom } from "@types-app/study";
 import Badge from "./Badge";
-import IconButton from "./IconButton";
+import { Button } from "@shared/components/Button";
 
 interface CardClassroomProps {
   readonly materia: Classroom;
@@ -38,20 +38,20 @@ export default function CardClassroom({
         aria-label={`Ações da matéria ${materia.title}`}
         className="flex items-center gap-2"
       >
-        <IconButton
+        <Button.Root
+          aria-label={`Concluir revisão de ${materia.title}`}
+          color="slate"
           onClick={actions.edit}
-          ariaLabel={`Editar matéria ${materia.title}`}
-          variant="secondary"
         >
-          <Pencil aria-hidden="true" className="h-4 w-4" />
-        </IconButton>
-        <IconButton
-          onClick={actions.delete}
-          ariaLabel={`Excluir matéria ${materia.title}`}
-          variant="danger"
+          <Button.Icon icon={Pencil} size="15" />
+        </Button.Root>
+        <Button.Root
+          aria-label={`Concluir revisão de ${materia.title}`}
+          color="red"
+          onClick={actions.edit}
         >
-          <Trash2 aria-hidden="true" className="h-4 w-4" />
-        </IconButton>
+          <Button.Icon icon={Trash2} size="15" />
+        </Button.Root>
       </div>
     </section>
   );

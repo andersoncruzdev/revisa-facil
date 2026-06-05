@@ -2,7 +2,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import type { Content, Classroom } from "@types-app/study";
 import { formatDateBR } from "@utils/transformDate";
 import Badge from "./Badge";
-import IconButton from "./IconButton";
+import { Button } from "@shared/components/Button";
 
 interface CardContentProps {
   readonly materia: Classroom;
@@ -43,22 +43,22 @@ export default function CardContent({
           className="flex items-center gap-2"
         >
           {actions?.edit && (
-            <IconButton
+            <Button.Root
+              aria-label={`Editar conteúdo ${conteudo.name}`}
+              color="slate"
               onClick={actions.edit}
-              ariaLabel={`Editar conteúdo ${conteudo.name}`}
-              variant="secondary"
             >
-              <Pencil aria-hidden="true" className="h-4 w-4" />
-            </IconButton>
+              <Button.Icon icon={Pencil} size="15" />
+            </Button.Root>
           )}
           {actions?.delete && (
-            <IconButton
+            <Button.Root
+              aria-label={`Excluir conteúdo ${conteudo.name}`}
+              color="red"
               onClick={actions.delete}
-              ariaLabel={`Excluir conteúdo ${conteudo.name}`}
-              variant="danger"
             >
-              <Trash2 aria-hidden="true" className="h-4 w-4" />
-            </IconButton>
+              <Button.Icon icon={Trash2} size="15" />
+            </Button.Root>
           )}
         </div>
       )}
