@@ -20,3 +20,7 @@ export type StudyStorage = {
 export type ClassroomWithContent = Classroom & {
   content: Content[];
 };
+
+export type RevisionContent = Content & {
+  tipoRevisao: string;
+}

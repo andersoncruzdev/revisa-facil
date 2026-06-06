@@ -4,8 +4,13 @@ import Badge from "../components/Badge";
 import { Card } from "../components/Card/index";
 import { Button } from "@shared/components/Button";
 
+type CardClassroomMateria = Classroom & {
+  readonly title?: string;
+  readonly amountContent?: number;
+};
+
 interface CardClassroomProps {
-  readonly materia: Classroom;
+  readonly materia: CardClassroomMateria;
   readonly actions: {
     edit: () => void;
     delete: () => void;
@@ -16,37 +21,39 @@ export default function CardClassroom({
   materia,
   actions,
 }: CardClassroomProps) {
-  const contentLabel = materia.amountContent === 1 ? "conteúdo" : "conteúdos";
+  const materiaName = materia.title ?? materia.name;
+  const amountContent = materia.amountContent ?? 0;
+  const contentLabel = amountContent === 1 ? "conteúdo" : "conteúdos";
 
   return (
     <Card.Root
-      name={`matéria ${materia.title}`}
-      ariaLabel={`Card da matéria ${materia.title}`}
+      name={`matéria ${materiaName}`}
+      ariaLabel={`Card da matéria ${materiaName}`}
     >
       <div className="flex min-w-0 items-center gap-3">
         <Card.Header>
           <Badge
             color={materia.color}
-            ariaLabel={`Cor da matéria ${materia.title}`}
+            ariaLabel={`Cor da matéria ${materiaName}`}
           />
         </Card.Header>
         <div className="min-w-0">
-          <Card.Title>{materia.title}</Card.Title>
+          <Card.Title>{materiaName}</Card.Title>
           <Card.Details>
-            {materia.amountContent} {contentLabel}
+            {amountContent} {contentLabel}
           </Card.Details>
         </div>
       </div>
-      <Card.Actions ariaLabel={`Ações da matéria ${materia.title}`}>
+      <Card.Actions ariaLabel={`Ações da matéria ${materiaName}`}>
         <Button.Root
-          aria-label={`Editar matéria ${materia.title}`}
+          aria-label={`Editar matéria ${materiaName}`}
           color="slate"
           onClick={actions.edit}
         >
           <Button.Icon icon={Pencil} size="15" />
         </Button.Root>
         <Button.Root
-          aria-label={`Excluir matéria ${materia.title}`}
+          aria-label={`Excluir matéria ${materiaName}`}
           color="red"
           onClick={actions.delete}
         >

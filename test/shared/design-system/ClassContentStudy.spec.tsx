@@ -1,12 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import ClassContentStudy from "@shared/design-system/ClassContentStudy";
-import type { ContentRevision, Classroom } from "@types-app/study";
+import type { RevisionContent, Classroom } from "@types-app/study";
 import userEvent from "@testing-library/user-event";
 
+
 const materia = {
-  title: "Geografia",
+  id: 1,
+  name: "Geografia",
   color: "#ea580c",
-  amountContent: 2,
 } satisfies Classroom;
 
 describe("Testes de verificação do 'ClassContentStudy'", () => {
@@ -22,12 +23,13 @@ describe("Testes de verificação do 'ClassContentStudy'", () => {
   it("renderiza uma revisão de hoje", async () => {
     const concluir = vi.fn();
     const conteudo = {
-      name: "Climas do Brasil",
-      studied: "2026-06-03",
-      revised: null,
-      nextRevision: "2026-06-04",
+      id: 1,
+      idMateria: 1,
+      content: "Climas do Brasil",
+      studied: "03/06/2026",
+      nextRevision: "04/06/2026",
       tipoRevisao: "D+1",
-    } satisfies ContentRevision;
+    } satisfies RevisionContent;
     render(
       <ClassContentStudy
         materia={materia}
@@ -53,12 +55,13 @@ describe("Testes de verificação do 'ClassContentStudy'", () => {
 
   it("renderiza uma revisão atrasada", () => {
     const conteudo = {
-      name: "Cartografia",
-      studied: "2026-05-20",
-      revised: "2026-05-21",
-      nextRevision: "2026-06-02",
+      id: 1,
+      idMateria: 1,
+      content: "Cartografia",
+      studied: "20/05/2026",
+      nextRevision: "02/06/2026",
       tipoRevisao: "D+14",
-    } satisfies ContentRevision;
+    } satisfies RevisionContent;
 
     render(
       <ClassContentStudy

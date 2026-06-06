@@ -3,11 +3,16 @@ import { userEvent } from "@testing-library/user-event";
 import CardClassroom from "@shared/design-system/CardClassroom";
 import type { Classroom } from "@types-app/study";
 
+type CardClassroomFixture = Classroom & {
+  readonly amountContent: number;
+};
+
 const materia = {
-  title: "Matemática",
+  id: 1,
+  name: "Matemática",
   color: "#2563eb",
   amountContent: 3,
-} satisfies Classroom;
+} satisfies CardClassroomFixture;
 
 describe("Testes de verificação do 'CardClassroom'", () => {
   it("renderiza os dados da matéria", () => {
@@ -33,12 +38,7 @@ describe("Testes de verificação do 'CardClassroom'", () => {
     const edit = vi.fn();
     const remove = vi.fn();
 
-    render(
-      <CardClassroom
-        materia={materia}
-        actions={{ edit, delete: remove }}
-      />,
-    );
+    render(<CardClassroom materia={materia} actions={{ edit, delete: remove }} />);
 
     await user.click(screen.getByRole("button", { name: "Editar matéria Matemática" }));
     await user.click(screen.getByRole("button", { name: "Excluir matéria Matemática" }));

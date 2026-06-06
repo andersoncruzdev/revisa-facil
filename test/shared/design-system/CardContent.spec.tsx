@@ -4,16 +4,17 @@ import CardContent from "@shared/design-system/CardContent";
 import type { Content, Classroom } from "@types-app/study";
 
 const materia = {
-  title: "História",
+  id: 1,
+  name: "História",
   color: "#16a34a",
-  amountContent: 5,
 } satisfies Classroom;
 
 const conteudo = {
-  name: "Revolução Francesa",
-  studied: "2026-06-01",
-  revised: null,
-  nextRevision: "2026-06-08",
+  id: 1,
+  idMateria: 1,
+  content: "Revolução Francesa",
+  studied: "01/06/2026",
+  nextRevision: "08/06/2026",
 } satisfies Content;
 
 describe("Testes de verificação do 'CardContent'", () => {

@@ -24,7 +24,7 @@ describe("Testes de verificação do 'Revisions'", () => {
       },
     ]
 
-    render(<Revisions items={items} />);
+    render(<Revisions items={items as any} />);
 
     expect(
       screen.getByRole("list", { name: "Resumo de revisões" }),
