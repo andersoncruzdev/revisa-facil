@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 const srcPath = (path: string) => new URL(`./src/${path}`, import.meta.url).pathname;
+const rootPath = (path: string) => new URL(`./${path}`, import.meta.url).pathname;
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,7 +17,7 @@ export default defineConfig({
       "@pages": srcPath("pages"),
       "@services": srcPath("services"),
       "@shared": srcPath("shared"),
-      "@test": srcPath("test"),
+      "@test": rootPath("test"),
       "@types-app": srcPath("types"),
       "@utils": srcPath("utils"),
     },
