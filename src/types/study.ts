@@ -1,22 +1,23 @@
-export type StudyDate = Date | string;
+export type Classroom = {
+  id: number;
+  name: string;
+  color: string;
+  amountContent: number;
+};
 
-export type RevisionInterval = "D+1" | "D+7" | "D+14";
+export type Content = {
+  id: number;
+  idMateria: number;
+  content: string;
+  studied: string;
+  nextRevision: string;
+};
 
-export interface Classroom {
-  readonly id?: string;
-  readonly title: string;
-  readonly color: string;
-  readonly amountContent: number;
-}
+export type StudyStorage = {
+  subjects: Classroom[];
+  contents: Content[];
+};
 
-export interface Content {
-  readonly id?: string;
-  readonly name: string;
-  readonly studied: StudyDate;
-  readonly revised?: StudyDate | null;
-  readonly nextRevision: StudyDate;
-}
-
-export interface ContentRevision extends Content {
-  readonly tipoRevisao: RevisionInterval;
-}
+export type ClassroomWithContent = Classroom & {
+  content: Content[];
+};
