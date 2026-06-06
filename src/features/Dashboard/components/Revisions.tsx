@@ -1,8 +1,12 @@
-import type { CardProps } from "@shared/components/Card";
-import Card from "@shared/components/Card";
+import Info from "@shared/components/Info";
+import { ReactNode } from "react";
 
 interface RevisionsProps {
-  readonly items: readonly CardProps[];
+  readonly items: [{
+    name: string,
+    icon: ReactNode,
+    quantity: number
+  }];
 }
 
 export default function Revisions({ items }: RevisionsProps) {
@@ -13,7 +17,7 @@ export default function Revisions({ items }: RevisionsProps) {
     >
       {items.map((item) => (
         <li key={item.name}>
-          <Card name={item.name} icon={item.icon} quantity={item.quantity} />
+          <Info name={item.name} icon={item.icon} quantity={item.quantity} />
         </li>
       ))}
     </ul>

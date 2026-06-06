@@ -1,11 +1,17 @@
+import { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import { CalendarCheck, Clock } from "lucide-react";
 import Revisions from "@features/Dashboard/components/Revisions";
-import type { CardProps } from "@shared/components/Card";
+
+interface RevisionsProps {
+  readonly name: string,
+  readonly icon: ReactNode,
+  readonly quantity: number
+}
 
 describe("Testes de verificação do 'Revisions'", () => {
   it("renderiza a lista de cards recebida por props", () => {
-    const items = [
+    const items: RevisionsProps[] = [
       {
         name: "card1",
         icon: <CalendarCheck data-testid="icon-card1" aria-hidden="true" />,
@@ -16,7 +22,7 @@ describe("Testes de verificação do 'Revisions'", () => {
         icon: <Clock data-testid="icon-card2" aria-hidden="true" />,
         quantity: 8,
       },
-    ] satisfies CardProps[];
+    ]
 
     render(<Revisions items={items} />);
 
