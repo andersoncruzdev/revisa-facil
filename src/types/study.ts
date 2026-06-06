@@ -2,7 +2,6 @@ export type Classroom = {
   id: number;
   name: string;
   color: string;
-  amountContent: number;
 };
 
 export type Content = {
