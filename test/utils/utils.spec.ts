@@ -1,8 +1,8 @@
 import { utils } from "@utils/utils";
 
 const dataMock = [
-  { id: 2, name: "nameMock2", amountQuantity: 1, color: "colorMock" },
-  { id: 1, name: "nameMock1", amountQuantity: 1, color: "colorMock" },
+  { id: 2, name: "nameMock2", color: "colorMock" },
+  { id: 1, name: "nameMock1", color: "colorMock" },
 ];
 
 describe("Data: utils", () => {
@@ -16,7 +16,7 @@ describe("Data: utils", () => {
     expect(index).toBe(undefined);
   });
 
-  it("deve retornar o dado ao rereceber um parâmetro se existir", () => {
+  it("deve retornar o dado ao receber um parâmetro se existir", () => {
     const data = utils.param(dataMock, "name", "nameMock2");
     expect(data).toEqual(dataMock[0]);
   });
@@ -30,9 +30,17 @@ describe("Data: utils", () => {
     const newData = {
       id: utils.nextId(dataMock),
       name: "nameMock3",
-      amountQuantity: 1,
       color: "colorMock3",
     };
     expect(newData).toEqual({ ...newData, id: 3 });
   });
+
+  it("ao criar um novo item e a lista for zero, o id deve ser 1", () => {
+    const newData = {
+      id: utils.nextId([]),
+      name: "nameMockTest",
+      color: "black",
+    }
+    expect(newData).toEqual({id: 1, name: "nameMockTest", color: "black"})
+  })
 });

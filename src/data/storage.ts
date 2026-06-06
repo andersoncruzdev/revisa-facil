@@ -15,6 +15,8 @@ const getLocalStorage = <T>(name: string): T | null => {
 
 const addLocalStorage = <T>(name: string, data: T): boolean => {
   try {
+    if (name !== "study") return false;
+  
     const json = JSON.stringify(data);
 
     localStorage.setItem(name, json);
