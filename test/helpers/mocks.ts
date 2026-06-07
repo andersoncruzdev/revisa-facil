@@ -11,7 +11,7 @@ export const useMocks = <T>(mockFunction: Mock, expectedReturn: T) => {
 
   const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
-  mockFunction.mockResolvedValue(expectedReturn);
+  mockFunction.mockReturnValue(expectedReturn);
 
   return {
     queryClient,
