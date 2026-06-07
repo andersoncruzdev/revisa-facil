@@ -11,7 +11,7 @@ const materia = {
 
 const conteudo = {
   id: 1,
-  idMateria: 1,
+  idClassroom: 1,
   content: "Revolução Francesa",
   studied: "01/06/2026",
   nextRevision: "08/06/2026",

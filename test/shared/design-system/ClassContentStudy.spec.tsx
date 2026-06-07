@@ -24,7 +24,7 @@ describe("Testes de verificação do 'ClassContentStudy'", () => {
     const concluir = vi.fn();
     const conteudo = {
       id: 1,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Climas do Brasil",
       studied: "03/06/2026",
       nextRevision: "04/06/2026",
@@ -56,7 +56,7 @@ describe("Testes de verificação do 'ClassContentStudy'", () => {
   it("renderiza uma revisão atrasada", () => {
     const conteudo = {
       id: 1,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Cartografia",
       studied: "20/05/2026",
       nextRevision: "02/06/2026",

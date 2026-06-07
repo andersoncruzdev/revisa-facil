@@ -21,14 +21,14 @@ const storageMock: StudyStorage = {
   contents: [
     {
       id: 1,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",
     },
     {
       id: 2,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Divisão política",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",
@@ -70,7 +70,7 @@ describe("Data: content", () => {
         ...storageMock.contents,
         {
           id: 3,
-          idMateria: 1,
+          idClassroom: 1,
           ...newContent,
         },
       ],
@@ -103,14 +103,14 @@ describe("Data: content", () => {
       contents: [
         {
           id: 1,
-          idMateria: 1,
+          idClassroom: 1,
           content: "Direitos e garantias individuais",
           studied: "08/06/2026",
           nextRevision: "07/06/2026",
         },
         {
           id: 2,
-          idMateria: 1,
+          idClassroom: 1,
           content: "Divisão política",
           studied: "01/06/2026",
           nextRevision: "07/06/2026",
@@ -145,7 +145,7 @@ describe("Data: content", () => {
       contents: [
         {
           id: 2,
-          idMateria: 1,
+          idClassroom: 1,
           content: "Divisão política",
           studied: "01/06/2026",
           nextRevision: "07/06/2026",

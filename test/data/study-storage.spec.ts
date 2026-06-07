@@ -21,7 +21,7 @@ const storageMock: StudyStorage = {
   contents: [
     {
       id: 1,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",

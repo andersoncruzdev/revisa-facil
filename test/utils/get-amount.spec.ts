@@ -12,21 +12,21 @@ const storageMock = {
   contents: [
     {
       id: 1,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",
     },
     {
       id: 2,
-      idMateria: 1,
+      idClassroom: 1,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",
     },
     {
       id: 3,
-      idMateria: 2,
+      idClassroom: 2,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",

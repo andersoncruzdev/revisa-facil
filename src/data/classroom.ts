@@ -96,7 +96,7 @@ const deleteClassroom = (idClassroom: number): boolean => {
   );
 
   const updatedContents = studyStorage.contents.filter(
-    (content) => content.idMateria !== idClassroom,
+    (content) => content.idClassroom !== idClassroom,
   );
 
   return actionsStudyStorage.save({
