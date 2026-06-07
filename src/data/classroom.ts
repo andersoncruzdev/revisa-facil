@@ -2,8 +2,8 @@ import { Classroom } from "@types-app/study";
 import { utils } from "../utils/utils";
 import { actionsStudyStorage } from "./study-storage";
 
-type NewClassroom = Omit<Classroom, "id">;
-type EditClassroom = Partial<Omit<Classroom, "id">>;
+export type NewClassroom = Omit<Classroom, "id">;
+export type EditClassroom = Partial<Omit<Classroom, "id">>;
 
 const normalizeName = (name: string): string => {
   return name.trim().toLowerCase();
