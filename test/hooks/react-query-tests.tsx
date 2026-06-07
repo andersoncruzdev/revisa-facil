@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 
+
 // Simula o ambiente real, o QueryClientProvider
 export const createWrapper = (queryClient: QueryClient) => {
   return ({ children }: { children: ReactNode }) => {
