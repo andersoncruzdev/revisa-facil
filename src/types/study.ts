@@ -6,7 +6,7 @@ export type Classroom = {
 
 export type Content = {
   id: number;
-  idMateria: number;
+  idClassroom: number;
   content: string;
   studied: string;
   nextRevision: string;

@@ -2,9 +2,8 @@ import { Content } from "@types-app/study";
 import { actionsStudyStorage } from "./study-storage";
 import { utils } from "../utils/utils";
 
-type NewContent = Omit<Content, "id" | "idMateria">;
-
-type UpdateContent = Partial<Omit<Content, "id" | "idMateria">>;
+export type NewContent = Omit<Content, "id" | "idClassroom">;
+export type UpdateContent = Partial<Omit<Content, "id" | "idClassroom">>;
 
 const getContents = (): Content[] => {
   const storage = actionsStudyStorage.get();
@@ -13,20 +12,20 @@ const getContents = (): Content[] => {
 };
 
 const addContent = (
-  idMateria: number,
+  idClassroom: number,
   data: NewContent,
 ): boolean => {
   const storage = actionsStudyStorage.get();
 
   const subjectExists = storage.subjects.some(
-    (subject) => subject.id === idMateria,
+    (subject) => subject.id === idClassroom,
   );
 
   if (!subjectExists) return false;
 
   const newContent: Content = {
     id: utils.nextId(storage.contents),
-    idMateria,
+    idClassroom,
     ...data,
   };
 
