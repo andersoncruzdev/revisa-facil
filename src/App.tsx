@@ -1,15 +1,8 @@
-import { Outlet } from "react-router-dom";
-import HeaderComponent from "@shared/components/Header";
+import { useRoutes } from "react-router-dom";
+import { routes } from "./route";
 
 function App() {
-  return (
-    <>
-      <HeaderComponent />
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        <Outlet />
-      </main>
-    </>
-  );
+  return useRoutes(routes);
 }
 
 export default App;

@@ -1,18 +1,21 @@
 import { createElement } from "react";
-import { createHashRouter, type RouteObject } from "react-router-dom";
-import App from "./App";
+import type { RouteObject } from "react-router-dom";
+import ClassroomPage from "@pages/Classroom";
+import RootPage from "@pages/Root";
 
 export const routes = [
   {
     path: "/",
-    element: createElement(App),
+    element: createElement(RootPage),
     children: [
       {
-        path: "dashboard",
-        element: createElement(App),
-      }
+        index: true,
+        element: createElement("h1", null, "Dashboard"),
+      },
+      {
+        path: "classrooms",
+        element: createElement(ClassroomPage),
+      },
     ],
   },
 ] satisfies RouteObject[];
-
-export const router = createHashRouter(routes);
