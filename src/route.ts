@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { createHashRouter, type RouteObject } from "react-router-dom";
-import App from "@app/App";
+import App from "./App";
 
 export const routes = [
   {
@@ -10,7 +10,7 @@ export const routes = [
       {
         path: "dashboard",
         element: createElement(App),
-      },
+      }
     ],
   },
 ] satisfies RouteObject[];
