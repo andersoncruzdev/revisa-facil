@@ -1,23 +1,32 @@
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import HeaderComponent from "@shared/components/Header";
+
+function renderHeader() {
+  return render(
+    <MemoryRouter>
+      <HeaderComponent />
+    </MemoryRouter>,
+  );
+}
 
 describe("Testes de verificação do 'HeaderComponente'", () => {
   it("verifica se renderiza corretamente", () => {
-    render(<HeaderComponent />);
+    renderHeader();
     expect(screen.getByTestId("icon-bookopen-header")).toBeInTheDocument();
     expect(screen.getByTestId("h1-header")).toBeInTheDocument();
     expect(screen.getByTestId("h2-header")).toBeInTheDocument();
   });
 
   it.each([
-    { name: "Dashboard", href: "#/dashboard" },
-    { name: "Matérias", href: "#/materias" },
-    { name: "Conteúdos", href: "#/conteudos" },
-    { name: "Revisões", href: "#/revisoes" },
-    { name: "Histórico", href: "#/historico" },
+    { name: "Dashboard", href: "/" },
+    { name: "Matérias", href: "/classrooms" },
+    { name: "Conteúdos", href: "/conteudos" },
+    { name: "Revisões", href: "/revisoes" },
+    { name: "Histórico", href: "/historico" },
   ])("verifica se a âncora possui o href correto", ({ name, href }) => {
-    render(<HeaderComponent />);
+    renderHeader();
     const link = screen.getByRole("link", { name });
     expect(link).toHaveAttribute("href", href);
   });
@@ -25,7 +34,7 @@ describe("Testes de verificação do 'HeaderComponente'", () => {
   it("altera o link ativo ao clicar", async () => {
     const user = userEvent.setup();
 
-    render(<HeaderComponent />);
+    renderHeader();
 
     const dashboard = screen.getByRole("link", { name: "Dashboard" });
     const materias = screen.getByRole("link", { name: "Matérias" });

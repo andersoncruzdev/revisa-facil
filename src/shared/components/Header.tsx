@@ -1,5 +1,6 @@
 import { BookOpen } from "lucide-react";
 import { useHeader } from "@hooks/useHeader";
+import { NavLink } from "react-router-dom";
 
 type NavigationBtn = {
   name: string;
@@ -54,9 +55,9 @@ export default function HeaderComponent() {
           aria-label="Navegação principal"
         >
           {navigationBtns.map((btn) => (
-            <a
+            <NavLink
               key={btn.href}
-              href={btn.href}
+              to={btn.href}
               onClick={() => setActive(btn.href)}
               aria-current={active === btn.href ? "page" : undefined}
               className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
@@ -66,7 +67,7 @@ export default function HeaderComponent() {
               }`}
             >
               {btn.name}
-            </a>
+            </NavLink>
           ))}
         </nav>
       </div>
