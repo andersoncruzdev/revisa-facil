@@ -7,11 +7,11 @@ type NavigationBtn = {
 };
 
 const navigationBtns: NavigationBtn[] = [
-  { name: "Dashboard", href: "#/dashboard" },
-  { name: "Matérias", href: "#/materias" },
-  { name: "Conteúdos", href: "#/conteudos" },
-  { name: "Revisões", href: "#/revisoes" },
-  { name: "Histórico", href: "#/historico" },
+  { name: "Dashboard", href: "/" },
+  { name: "Matérias", href: "/classrooms" },
+  { name: "Conteúdos", href: "/conteudos" },
+  { name: "Revisões", href: "/revisoes" },
+  { name: "Histórico", href: "/historico" },
 ];
 
 export default function HeaderComponent() {
