@@ -18,7 +18,7 @@ export default function HeaderComponent() {
   const { active, setActive } = useHeader(navigationBtns[0].href);
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur supports-backdrop-filter:bg-white/60">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:h-16 md:flex-row md:items-center md:justify-between md:py-0">
         <section
           className="flex items-center gap-3"
