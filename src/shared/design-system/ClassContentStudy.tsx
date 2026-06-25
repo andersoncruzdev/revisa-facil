@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import type { Content, Classroom } from "@types-app/study";
-import Badge from "../components/Badge";
+import { Badge } from "../components/Badge";
 import { Card } from "../components/Card/index";
 import { Button } from "@shared/components/Button";
 import { actionsDate } from "@utils/transform-date";

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "@shared/components/Header";
 
-function App() {
+export default function RootPage() {
   return (
     <>
       <HeaderComponent />
@@ -11,5 +11,3 @@ function App() {
     </>
   );
 }
-
-export default App;

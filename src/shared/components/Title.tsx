@@ -11,7 +11,7 @@ interface TitleProps {
   readonly typeTitle: TitleType;
 }
 
-export default function Title({ subTitle, title, typeTitle }: TitleProps) {
+export function Title({ subTitle, title, typeTitle }: TitleProps) {
   const TitleTag = typeTitle;
 
   return (

@@ -1,5 +1,6 @@
 import { BookOpen } from "lucide-react";
 import { useHeader } from "@hooks/useHeader";
+import { NavLink } from "react-router-dom";
 
 type NavigationBtn = {
   name: string;
@@ -7,18 +8,18 @@ type NavigationBtn = {
 };
 
 const navigationBtns: NavigationBtn[] = [
-  { name: "Dashboard", href: "#/dashboard" },
-  { name: "Matérias", href: "#/materias" },
-  { name: "Conteúdos", href: "#/conteudos" },
-  { name: "Revisões", href: "#/revisoes" },
-  { name: "Histórico", href: "#/historico" },
+  { name: "Dashboard", href: "/" },
+  { name: "Matérias", href: "/classrooms" },
+  { name: "Conteúdos", href: "/conteudos" },
+  { name: "Revisões", href: "/revisoes" },
+  { name: "Histórico", href: "/historico" },
 ];
 
 export default function HeaderComponent() {
   const { active, setActive } = useHeader(navigationBtns[0].href);
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur supports-backdrop-filter:bg-white/60">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:h-16 md:flex-row md:items-center md:justify-between md:py-0">
         <section
           className="flex items-center gap-3"
@@ -54,9 +55,9 @@ export default function HeaderComponent() {
           aria-label="Navegação principal"
         >
           {navigationBtns.map((btn) => (
-            <a
+            <NavLink
               key={btn.href}
-              href={btn.href}
+              to={btn.href}
               onClick={() => setActive(btn.href)}
               aria-current={active === btn.href ? "page" : undefined}
               className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
@@ -66,7 +67,7 @@ export default function HeaderComponent() {
               }`}
             >
               {btn.name}
-            </a>
+            </NavLink>
           ))}
         </nav>
       </div>
