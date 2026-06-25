@@ -11,6 +11,7 @@ export default defineConfig({
     alias: {
       "@app": srcPath("app"),
       "@assets": srcPath("assets"),
+      "@constants": srcPath("constants"),
       "@data": srcPath("data"),
       "@features": srcPath("features"),
       "@hooks": srcPath("hooks"),
