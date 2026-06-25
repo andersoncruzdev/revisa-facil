@@ -6,7 +6,7 @@ interface InputRootProps {
 
 export function InputRoot({ children }: InputRootProps) {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row  w-full">
       {children}
     </div>
   );
