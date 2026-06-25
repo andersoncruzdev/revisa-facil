@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { coverageConfigDefaults, defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -29,5 +29,18 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./test/setup.ts",
     css: true,
+    coverage: {
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        "test/**",
+        "src/pages/**",
+        "src/constants/**",
+        "src/data/**",
+        "src/types/**",
+        "**/*.css",
+        "src/main.tsx",
+        "src/App.tsx",
+      ],
+    },
   },
 });
