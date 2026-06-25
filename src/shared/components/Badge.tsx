@@ -4,7 +4,7 @@ interface BadgeProps {
   readonly ariaLabel?: string;
 }
 
-export default function Badge({ color, content, ariaLabel }: BadgeProps) {
+export function Badge({ color, content, ariaLabel }: BadgeProps) {
   return (
     <span
       aria-label={ariaLabel}

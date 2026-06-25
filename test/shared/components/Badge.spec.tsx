@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Badge from "@shared/components/Badge";
+import { Badge } from "@shared/components/Badge";
 
 describe("Testes de verificação do 'Badge'", () => {
   it("renderiza o conteúdo acessível com a cor informada", () => {
