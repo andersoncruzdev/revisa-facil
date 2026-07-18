@@ -28,7 +28,31 @@ describe("Testes de verificação do 'Button'", () => {
 
     expect(screen.getByRole("button", { name: "Excluir" })).toHaveClass(
       "bg-red-600",
+      "text-white",
+      "focus-visible:ring-red-500",
       "rounded-full",
+    );
+  });
+
+  it("usa azul pastel com contraste na variante principal", () => {
+    render(<Button.Root>Salvar</Button.Root>);
+
+    expect(screen.getByRole("button", { name: "Salvar" })).toHaveClass(
+      "bg-blue-100",
+      "text-blue-900",
+      "hover:bg-blue-200",
+      "focus-visible:ring-blue-400",
+    );
+  });
+
+  it("usa tons slate suaves na variante secundária", () => {
+    render(<Button.Root color="slate">Cancelar</Button.Root>);
+
+    expect(screen.getByRole("button", { name: "Cancelar" })).toHaveClass(
+      "bg-slate-200",
+      "text-slate-800",
+      "hover:bg-slate-300",
+      "focus-visible:ring-slate-400",
     );
   });
 

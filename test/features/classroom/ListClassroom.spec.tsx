@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useClassroom } from "@hooks/useClassroom";
-import ListClassroom from "@shared/design-system/ListClassroom";
+import ListClassroom from "@features/classroom/ListClassroom";
 import type { Classroom } from "@types-app/study";
 
 vi.mock("@hooks/useClassroom", () => ({
@@ -51,19 +51,19 @@ describe("Testes de verificação do 'ListClassroom'", () => {
     render(<ListClassroom />);
 
     expect(screen.getByLabelText("lista de matérias")).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { level: 2, name: "Matérias cadastradas" }),
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText("Divisão da matéria: Matemática")).toBeInTheDocument();
+    const classroomCard = screen.getByLabelText("Divisão da matéria: Matemática");
+
+    expect(classroomCard).toHaveClass(
+      "rounded-xl",
+      "border-stone-300",
+      "bg-white",
+    );
+    expect(classroomCard).toHaveStyle({
+      boxShadow: "inset 6px 0 0 #2563eb",
+    });
     expect(screen.getByLabelText("Divisão da matéria: História")).toBeInTheDocument();
-    expect(screen.getByText("Matemática")).toBeInTheDocument();
-    expect(screen.getByText("História")).toBeInTheDocument();
-    expect(screen.getByLabelText("Cor da matéria Matemática")).toHaveStyle({
-      backgroundColor: "#2563eb",
-    });
-    expect(screen.getByLabelText("Cor da matéria História")).toHaveStyle({
-      backgroundColor: "#16a34a",
-    });
+    expect(screen.getByText("MATEMÁTICA")).toBeInTheDocument();
+    expect(screen.getByText("HISTÓRIA")).toBeInTheDocument();
   });
 
   it("exibe mensagem quando não há matérias cadastradas", () => {

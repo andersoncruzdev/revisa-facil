@@ -10,13 +10,14 @@ export default function ButtonRoot({
   children,
   rounded,
   color = "blue",
+  className = "",
   ...props
 }: ButtonRootProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${buttonRootClass[color]} ${
+      className={`inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 motion-reduce:transition-none ${buttonRootClass[color]} ${
         rounded ? buttonShapeClass.rounded : buttonShapeClass.default
-      }`}
+      } ${className}`}
       {...props}
     >
       {children}
@@ -25,9 +26,12 @@ export default function ButtonRoot({
 }
 
 const buttonRootClass = {
-  blue: "bg-blue-700 text-white hover:bg-blue-800",
-  slate: "bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950",
-  red: "bg-red-600 text-white hover:bg-red-700",
+  blue:
+    "bg-blue-100 text-blue-900 hover:bg-blue-200 active:bg-blue-300 focus-visible:ring-blue-400",
+  slate:
+    "bg-slate-200 text-slate-800 hover:bg-slate-300 active:bg-slate-400 focus-visible:ring-slate-400",
+  red:
+    "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500",
 };
 
 type ButtonRootClass = keyof typeof buttonRootClass;
