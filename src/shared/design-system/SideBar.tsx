@@ -2,6 +2,7 @@ import type { ComponentProps, ElementType } from "react";
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSideBar } from "@hooks/useSideBar";
+import { Button } from "@shared/components/Button";
 
 interface SideBarProps extends Readonly<ComponentProps<"aside">> {
   readonly options: Array<{
@@ -29,19 +30,17 @@ export default function SideBar({ options, action, className = "", ...props }: S
           <p className="truncate text-xs text-blue-200">Ciclo de estudos</p>
         </div>
 
-        <button
+        <Button.Root
           type="button"
+          color="slate"
+          rounded
           aria-label={expanded ? "Recolher menu" : "Expandir menu"}
           aria-expanded={expanded}
           onClick={toggleExpanded}
-          className="ml-auto grid h-10 w-10 shrink-0 place-items-center rounded-lg text-blue-100 transition-colors hover:bg-blue-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 motion-reduce:transition-none"
+          className="ml-auto"
         >
-          {expanded ? (
-            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-          ) : (
-            <ChevronRight className="h-5 w-5" aria-hidden="true" />
-          )}
-        </button>
+          <Button.Icon icon={expanded ? ChevronLeft : ChevronRight} />
+        </Button.Root>
       </div>
 
       <nav
@@ -70,15 +69,17 @@ export default function SideBar({ options, action, className = "", ...props }: S
         ))}
       </nav>
 
-      <button
+      <Button.Root
         type="button"
         aria-label="Adicionar nova matéria"
         onClick={action}
-        className="ml-1 flex min-w-16 flex-col items-center justify-center gap-1 rounded-lg bg-blue-700 px-2 py-2 text-[0.6875rem] font-semibold text-white transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 motion-reduce:transition-none md:ml-0 md:min-w-0 md:flex-row md:gap-2 md:px-3 md:py-3 md:text-sm"
+        className="ml-1 min-w-16 flex-col px-2 text-[0.6875rem] md:ml-0 md:min-w-0 md:flex-row md:px-3 md:py-3 md:text-sm"
       >
-        <Plus className="h-5 w-5 shrink-0" aria-hidden="true" />
-        <span className={expanded ? "md:block" : "md:hidden"}>Nova matéria</span>
-      </button>
+        <Button.Icon icon={Plus} />
+        <Button.Text className={expanded ? "md:block" : "md:hidden"}>
+          Nova matéria
+        </Button.Text>
+      </Button.Root>
     </aside>
   );
 }
