@@ -20,7 +20,7 @@ export default function ListClassroom() {
           {getClassroom.data.map((classroom) => (
             <div
               aria-label={`Divisão da matéria: ${classroom.name}`}
-              key={classroom.id}
+              key={`${classroom.id}${classroom.color}${classroom.name}`}
               className="flex items-center justify-between gap-4 rounded-xl border border-stone-300 bg-white py-6 pl-8 pr-6 sm:py-7 sm:pl-9 sm:pr-7"
               style={{ boxShadow: `inset 6px 0 0 ${classroom.color}` }}
             >
