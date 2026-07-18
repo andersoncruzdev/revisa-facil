@@ -10,11 +10,11 @@ const options = [
   { name: "Anotações", href: "#/notes", icon: NotebookText },
 ];
 
-function renderSideBar() {
+function renderSideBar(action = vi.fn()) {
   return render(
     <MemoryRouter>
       <SideBarProvider>
-        <SideBar options={options} action={vi.fn()} />
+        <SideBar options={options} action={action} />
       </SideBarProvider>
     </MemoryRouter>,
   );
@@ -52,6 +52,7 @@ describe("SideBar", () => {
 
     const toggle = screen.getByRole("button", { name: "Recolher menu" });
     expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(toggle).toHaveClass("bg-slate-200", "rounded-full");
 
     await user.click(toggle);
 
@@ -59,5 +60,21 @@ describe("SideBar", () => {
       "aria-expanded",
       "false",
     );
+  });
+
+  it("executa a ação pelo botão principal", async () => {
+    const user = userEvent.setup();
+    const action = vi.fn();
+    renderSideBar(action);
+
+    const addButton = screen.getByRole("button", {
+      name: "Adicionar nova matéria",
+    });
+
+    expect(addButton).toHaveClass("bg-blue-100", "text-blue-900");
+
+    await user.click(addButton);
+
+    expect(action).toHaveBeenCalledTimes(1);
   });
 });
