@@ -20,7 +20,8 @@ export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const name = formData.get("name")?.toString().trim();
+
+    const name = (formData.get("name") as string)?.toString().trim();
 
     if (!name) return;
 
@@ -63,4 +64,3 @@ export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
     />
   );
 }
- 
