@@ -45,7 +45,7 @@ export default function SideBar({ options, action, className = "", ...props }: S
 
       <nav
         aria-label="Navegação principal"
-        className="flex min-w-0 flex-1 items-stretch gap-1 overflow-x-auto md:my-6 md:flex-col md:overflow-visible"
+        className="flex min-w-0 flex-1 items-stretch gap-1 overflow-x-auto md:my-6 md:flex-col md:overflow-visible overflow-auto scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {options.map((option) => (
           <Link
