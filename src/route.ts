@@ -1,11 +1,11 @@
 import { createElement } from "react";
 import type { RouteObject } from "react-router-dom";
-import ClassroomPage from "@pages/Classroom";
 import RootPage from "@pages/Root";
 import HomePage from "@features/home";
 import ContentPage from "@features/content";
 import NotesPage from "@features/notes";
 import IntervalsPage from "@features/intervalos";
+import ClassroomPage from "@features/classroom/Classroom";
 
 export const routes = [
   {
