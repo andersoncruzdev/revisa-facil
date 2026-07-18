@@ -51,7 +51,16 @@ describe("Testes de verificação do 'ListClassroom'", () => {
     render(<ListClassroom />);
 
     expect(screen.getByLabelText("lista de matérias")).toBeInTheDocument();
-    expect(screen.getByLabelText("Divisão da matéria: Matemática")).toBeInTheDocument();
+    const classroomCard = screen.getByLabelText("Divisão da matéria: Matemática");
+
+    expect(classroomCard).toHaveClass(
+      "rounded-xl",
+      "border-stone-300",
+      "bg-white",
+    );
+    expect(classroomCard).toHaveStyle({
+      boxShadow: "inset 6px 0 0 #2563eb",
+    });
     expect(screen.getByLabelText("Divisão da matéria: História")).toBeInTheDocument();
     expect(screen.getByText("Matemática")).toBeInTheDocument();
     expect(screen.getByText("História")).toBeInTheDocument();
