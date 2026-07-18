@@ -2,6 +2,10 @@ import { createElement } from "react";
 import type { RouteObject } from "react-router-dom";
 import ClassroomPage from "@pages/Classroom";
 import RootPage from "@pages/Root";
+import HomePage from "@features/home";
+import ContentPage from "@features/content";
+import NotesPage from "@features/notes";
+import IntervalsPage from "@features/intervalos";
 
 export const routes = [
   {
@@ -10,7 +14,19 @@ export const routes = [
     children: [
       {
         index: true,
-        element: createElement("h1", null, "Dashboard"),
+        element: createElement(HomePage),
+      },
+      {
+        path: "content",
+        element: createElement(ContentPage),
+      },
+      {
+        path: "notes",
+        element: createElement(NotesPage),
+      },
+      {
+        path: "intervalos",
+        element: createElement(IntervalsPage),
       },
       {
         path: "classrooms",
