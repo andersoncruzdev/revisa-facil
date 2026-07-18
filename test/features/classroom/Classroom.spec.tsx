@@ -43,8 +43,8 @@ describe("ClassroomPage", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Organize as matérias do seu ciclo de estudos."))
       .toBeInTheDocument();
-    expect(screen.getByText("Matemática")).toBeInTheDocument();
-    expect(screen.getByText("História")).toBeInTheDocument();
+    expect(screen.getByText("MATEMÁTICA")).toBeInTheDocument();
+    expect(screen.getByText("HISTÓRIA")).toBeInTheDocument();
   });
 
   it("abre e fecha o modal para adicionar matéria", async () => {

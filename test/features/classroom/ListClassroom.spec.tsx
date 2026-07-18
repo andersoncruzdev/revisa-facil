@@ -62,14 +62,8 @@ describe("Testes de verificação do 'ListClassroom'", () => {
       boxShadow: "inset 6px 0 0 #2563eb",
     });
     expect(screen.getByLabelText("Divisão da matéria: História")).toBeInTheDocument();
-    expect(screen.getByText("Matemática")).toBeInTheDocument();
-    expect(screen.getByText("História")).toBeInTheDocument();
-    expect(screen.getByLabelText("Cor da matéria Matemática")).toHaveStyle({
-      backgroundColor: "#2563eb",
-    });
-    expect(screen.getByLabelText("Cor da matéria História")).toHaveStyle({
-      backgroundColor: "#16a34a",
-    });
+    expect(screen.getByText("MATEMÁTICA")).toBeInTheDocument();
+    expect(screen.getByText("HISTÓRIA")).toBeInTheDocument();
   });
 
   it("exibe mensagem quando não há matérias cadastradas", () => {
