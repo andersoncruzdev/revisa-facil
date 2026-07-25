@@ -1,6 +1,14 @@
 import { actionsDate } from "@utils/transform-date";
 
 describe("Utils: transform-date", () => {
+  it("formata uma data no padrão brasileiro", () => {
+    expect(actionsDate.format(new Date(2026, 6, 25))).toBe("25/07/2026");
+  });
+
+  it("formata uma data futura somando dias", () => {
+    expect(actionsDate.addDays(new Date(2026, 6, 25), 6)).toBe("31/07/2026");
+  });
+
   it("recebe data string inválida e retorna null", () => {
     const dateString = actionsDate.string("06/13/2026");
     expect(dateString).toBeNull();
