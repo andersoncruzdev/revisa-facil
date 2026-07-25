@@ -3,6 +3,7 @@ import { Title } from "@shared/components/Title";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import AddContentModal from "./AddContent";
+import ListContent from "./ListContent";
 
 export default function ContentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function ContentPage() {
           <AddContentModal open onClose={() => setIsModalOpen(false)} />
         )}
       </div>
+      <ListContent />
     </section>
   );
 }
