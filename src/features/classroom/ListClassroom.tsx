@@ -3,9 +3,13 @@
 import { useClassroom } from "@hooks/useClassroom";
 import { Button } from "@shared/components/Button";
 
-import { Trash } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
+import { useState } from "react";
+import type { Classroom } from "@types-app/study";
+import { AddClassroomModal } from "./AddClassroomModal";
 
 export default function ListClassroom() {
+  const [classroomToEdit, setClassroomToEdit] = useState<Classroom>();
   const getClassroom = useClassroom.get();
   const deleteClassroom = useClassroom.delete();
 
@@ -29,17 +33,36 @@ export default function ListClassroom() {
                   {classroom.name.toUpperCase()}
                 </p>
               </div>
-              <Button.Root
-                aria-label={`Excluir matéria ${classroom.name}`}
-                color="red"
-                rounded
-                onClick={() => deleteWithId(classroom.id)}
-              >
-                <Button.Icon icon={Trash} />
-              </Button.Root>
+              <div className="flex shrink-0 gap-2">
+                <Button.Root
+                  type="button"
+                  aria-label={`Editar matéria ${classroom.name}`}
+                  color="slate"
+                  rounded
+                  onClick={() => setClassroomToEdit(classroom)}
+                >
+                  <Button.Icon icon={Pencil} />
+                </Button.Root>
+                <Button.Root
+                  type="button"
+                  aria-label={`Excluir matéria ${classroom.name}`}
+                  color="red"
+                  rounded
+                  onClick={() => deleteWithId(classroom.id)}
+                >
+                  <Button.Icon icon={Trash} />
+                </Button.Root>
+              </div>
             </div>
           ))}
         </div>
+        {classroomToEdit && (
+          <AddClassroomModal
+            open
+            classroom={classroomToEdit}
+            onClose={() => setClassroomToEdit(undefined)}
+          />
+        )}
       </section>
     );
   }

@@ -4,17 +4,21 @@ import { Input } from "@shared/components/Input";
 import { Modal } from "@shared/components/Modal";
 import { actionsDate } from "@utils/transform-date";
 import { FormEvent } from "react";
+import type { Content } from "@types-app/study";
 
 interface AddContentModalProps {
   readonly open: boolean;
   readonly onClose: () => void;
+  readonly contentToEdit?: Content;
 }
 
 export default function AddContentModal({
   open,
   onClose,
+  contentToEdit,
 }: AddContentModalProps) {
   const addContent = useContent.add();
+  const updateContent = useContent.update();
   const getClassroom = useClassroom.get();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -28,8 +32,25 @@ export default function AddContentModal({
 
     if (!classroomId || !content) return;
 
-    const today = new Date();
+    const mutationOptions = {
+      onSuccess: () => {
+        form.reset();
+        onClose();
+      },
+    };
 
+    if (contentToEdit) {
+      updateContent.mutate(
+        {
+          idContent: contentToEdit.id,
+          data: { content, idClassroom: classroomId },
+        },
+        mutationOptions,
+      );
+      return;
+    }
+
+    const today = new Date();
     addContent.mutate(
       {
         idClassroom: classroomId,
@@ -39,18 +60,14 @@ export default function AddContentModal({
           nextRevision: actionsDate.addDays(today, 6),
         },
       },
-      {
-        onSuccess: () => {
-          form.reset();
-          onClose();
-        },
-      },
+      mutationOptions,
     );
   };
 
-  const classroomUncolor = getClassroom.data?.map(
-    ({ color, ...resto }) => resto,
-  );
+  const classroomOptions = getClassroom.data?.map(({ id, name }) => ({
+    id,
+    name,
+  }));
 
   const content = (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -60,6 +77,7 @@ export default function AddContentModal({
           id="content-name-content"
           label="Nome do conteúdo:"
           name="content"
+          defaultValue={contentToEdit?.content}
           required
           autoFocus
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"
@@ -68,7 +86,8 @@ export default function AddContentModal({
           id="classroom-name-classroom"
           label="Nome da matéria:"
           name="classroom"
-          items={classroomUncolor}
+          defaultValue={contentToEdit?.idClassroom}
+          items={classroomOptions}
           required
           autoFocus
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"
@@ -78,11 +97,12 @@ export default function AddContentModal({
   );
   return (
     <Modal
-      title="Adicionar conteúdo"
+      title={contentToEdit ? "Editar conteúdo" : "Adicionar conteúdo"}
       content={content}
       open={open}
       onClose={onClose}
-      isSubmitting={addContent.isPending}
+      isSubmitting={addContent.isPending || updateContent.isPending}
+      submitLabel={contentToEdit ? "Salvar alterações" : "Enviar"}
     />
   );
 }

@@ -152,6 +152,19 @@ describe("Data: classroom", () => {
     });
   });
 
+  it("deve permitir salvar mantendo o mesmo nome", () => {
+    (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
+    (actionsStudyStorage.save as Mock).mockReturnValue(true);
+
+    const result = actionsClassroom.edit(1, {
+      name: " Direito Constitucional ",
+      color: "#FFFFFF",
+    });
+
+    expect(result).toBe(true);
+    expect(actionsStudyStorage.save).toHaveBeenCalled();
+  });
+
   it("deve falhar ao editar matéria inexistente", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 

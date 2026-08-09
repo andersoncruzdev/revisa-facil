@@ -5,7 +5,7 @@ import {
 } from "@constants/classroom-colors";
 
 interface ColorsProps {
-  readonly selectedColor?: ClassroomColor;
+  readonly selectedColor?: string;
   readonly onSelectColor: (color: ClassroomColor) => void;
 }
 

@@ -5,15 +5,22 @@ import { useColor } from "@hooks/useColor";
 import { Colors } from "@shared/components/Colors";
 import { Input } from "@shared/components/Input";
 import { Modal } from "@shared/components/Modal";
+import type { Classroom } from "@types-app/study";
 
 interface AddClassroomModalProps {
   readonly open: boolean;
   readonly onClose: () => void;
+  readonly classroom?: Classroom;
 }
 
-export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
+export function AddClassroomModal({
+  open,
+  onClose,
+  classroom,
+}: AddClassroomModalProps) {
   const addClassroom = useClassroom.add();
-  const { selectedColor, setSelectedColor } = useColor();
+  const updateClassroom = useClassroom.update();
+  const { selectedColor, setSelectedColor } = useColor(classroom?.color);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,14 +32,29 @@ export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
 
     if (!name) return;
 
+    const mutationOptions = {
+      onSuccess: () => {
+        form.reset();
+        setSelectedColor(classroomColors.azul);
+        onClose();
+      },
+    };
+
+    if (classroom) {
+      updateClassroom.mutate(
+        {
+          idClassroom: classroom.id,
+          data: { name, color: selectedColor },
+        },
+        mutationOptions,
+      );
+      return;
+    }
+
     addClassroom.mutate(
       { name, color: selectedColor },
       {
-        onSuccess: () => {
-          form.reset();
-          setSelectedColor(classroomColors.azul);
-          onClose();
-        },
+        ...mutationOptions,
       },
     );
   };
@@ -45,6 +67,7 @@ export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
           id="classroom-name-modal"
           label="Nome da matéria:"
           name="name"
+          defaultValue={classroom?.name}
           required
           autoFocus
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"
@@ -56,11 +79,12 @@ export function AddClassroomModal({ open, onClose }: AddClassroomModalProps) {
 
   return (
     <Modal
-      title="Adicionar matéria"
+      title={classroom ? "Editar matéria" : "Adicionar matéria"}
       content={content}
       open={open}
       onClose={onClose}
-      isSubmitting={addClassroom.isPending}
+      isSubmitting={addClassroom.isPending || updateClassroom.isPending}
+      submitLabel={classroom ? "Salvar alterações" : "Enviar"}
     />
   );
 }
