@@ -1,4 +1,4 @@
-import { useClassroom } from "@hooks/useClassroom";
+import { useSubject } from "@hooks/useSubject";
 import { useContent } from "@hooks/useContent";
 import { Button } from "@shared/components/Button";
 import { Pencil, Plus, Trash } from "lucide-react";
@@ -11,18 +11,18 @@ const fallbackShadowColor = "#a1a1aa";
 
 interface ListContentProps {
   readonly onAddContent?: () => void;
-  readonly onAddClassroom?: () => void;
+  readonly onAddSubject?: () => void;
 }
 
 export default function ListContent({
   onAddContent,
-  onAddClassroom,
+  onAddSubject,
 }: ListContentProps) {
   const [contentToEdit, setContentToEdit] = useState<Content>();
   const [contentToDelete, setContentToDelete] = useState<Content>();
   const getContent = useContent.get();
   const deleteContent = useContent.delete();
-  const getClassroom = useClassroom.get();
+  const getSubject = useSubject.get();
 
   const confirmDelete = () => {
     if (!contentToDelete) return;
@@ -36,10 +36,10 @@ export default function ListContent({
       <section aria-label="lista de conteúdos" className="mt-6">
         <div className="flex flex-col gap-4">
           {getContent.data.map((content) => {
-            const classroom = getClassroom.data?.find(
-              ({ id }) => id === content.idClassroom,
+            const subject = getSubject.data?.find(
+              ({ id }) => id === content.subjectId,
             );
-            const shadowColor = classroom?.color ?? fallbackShadowColor;
+            const shadowColor = subject?.color ?? fallbackShadowColor;
 
             return (
               <article
@@ -52,9 +52,9 @@ export default function ListContent({
                   <p className="wrap-break-word font-semibold leading-tight text-blue-950">
                     {content.content.toUpperCase()}
                   </p>
-                  {classroom && (
+                  {subject && (
                     <p className="mt-1 text-sm font-medium text-zinc-600">
-                      {classroom.name.toUpperCase()}
+                      {subject.name.toUpperCase()}
                     </p>
                   )}
                 </div>
@@ -102,7 +102,7 @@ export default function ListContent({
     );
   }
 
-  const hasClassrooms = Boolean(getClassroom.data?.length);
+  const hasSubjects = Boolean(getSubject.data?.length);
 
   return (
     <section
@@ -110,23 +110,23 @@ export default function ListContent({
       className="mt-6 flex flex-col items-start rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 sm:px-8"
     >
       <h2 className="text-lg font-semibold text-slate-950">
-        {hasClassrooms
+        {hasSubjects
           ? "Você ainda não possui conteúdos."
           : "Você precisa cadastrar uma matéria antes de adicionar conteúdos."}
       </h2>
       <p className="mt-1 max-w-lg text-sm leading-6 text-slate-600">
-        {hasClassrooms
+        {hasSubjects
           ? "Adicione o primeiro conteúdo e mantenha seus estudos organizados por matéria."
           : "A matéria será usada para agrupar seus conteúdos e acompanhar as próximas revisões."}
       </p>
       <Button.Root
         type="button"
-        onClick={hasClassrooms ? onAddContent : onAddClassroom}
+        onClick={hasSubjects ? onAddContent : onAddSubject}
         className="mt-5"
       >
         <Button.Icon icon={Plus} />
         <Button.Text>
-          {hasClassrooms
+          {hasSubjects
             ? "Adicionar primeiro conteúdo"
             : "Adicionar primeira matéria"}
         </Button.Text>

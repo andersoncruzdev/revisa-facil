@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useClassroom } from "@hooks/useClassroom";
-import ClassroomPage from "@features/classroom/Classroom";
-import type { Classroom } from "@types-app/study";
+import { useSubject } from "@hooks/useSubject";
+import SubjectPage from "@features/subject/Subject";
+import type { Subject } from "@types-app/study";
 
-vi.mock("@hooks/useClassroom", () => ({
-  useClassroom: {
+vi.mock("@hooks/useSubject", () => ({
+  useSubject: {
     get: vi.fn(),
     delete: vi.fn(),
     add: vi.fn(),
@@ -13,35 +13,35 @@ vi.mock("@hooks/useClassroom", () => ({
   },
 }));
 
-type GetClassroomQuery = ReturnType<typeof useClassroom.get>;
-type DeleteClassroomMutation = ReturnType<typeof useClassroom.delete>;
-type AddClassroomMutation = ReturnType<typeof useClassroom.add>;
+type GetSubjectQuery = ReturnType<typeof useSubject.get>;
+type DeleteSubjectMutation = ReturnType<typeof useSubject.delete>;
+type AddSubjectMutation = ReturnType<typeof useSubject.add>;
 
-const classrooms = [
+const subjects = [
   { id: 1, name: "Matemática", color: "#2563eb" },
   { id: 2, name: "História", color: "#16a34a" },
-] satisfies Classroom[];
+] satisfies Subject[];
 
-describe("ClassroomPage", () => {
+describe("SubjectPage", () => {
   beforeEach(() => {
-    vi.mocked(useClassroom.get).mockReturnValue({
-      data: classrooms,
-    } as GetClassroomQuery);
-    vi.mocked(useClassroom.delete).mockReturnValue({
+    vi.mocked(useSubject.get).mockReturnValue({
+      data: subjects,
+    } as GetSubjectQuery);
+    vi.mocked(useSubject.delete).mockReturnValue({
       mutate: vi.fn(),
-    } as unknown as DeleteClassroomMutation);
-    vi.mocked(useClassroom.add).mockReturnValue({
-      mutate: vi.fn(),
-      isPending: false,
-    } as unknown as AddClassroomMutation);
-    vi.mocked(useClassroom.update).mockReturnValue({
+    } as unknown as DeleteSubjectMutation);
+    vi.mocked(useSubject.add).mockReturnValue({
       mutate: vi.fn(),
       isPending: false,
-    } as unknown as ReturnType<typeof useClassroom.update>);
+    } as unknown as AddSubjectMutation);
+    vi.mocked(useSubject.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as unknown as ReturnType<typeof useSubject.update>);
   });
 
   it("apresenta e lista as matérias cadastradas", () => {
-    render(<ClassroomPage />);
+    render(<SubjectPage />);
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Matérias" }),
@@ -54,7 +54,7 @@ describe("ClassroomPage", () => {
 
   it("abre e fecha o modal para adicionar matéria", async () => {
     const user = userEvent.setup();
-    render(<ClassroomPage />);
+    render(<SubjectPage />);
 
     await user.click(screen.getByRole("button", { name: "Adicionar matéria" }));
 

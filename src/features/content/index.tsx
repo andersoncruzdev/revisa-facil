@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import AddContentModal from "./AddContent";
 import ListContent from "./ListContent";
-import { AddClassroomModal } from "@features/classroom/AddClassroomModal";
-import { useClassroom } from "@hooks/useClassroom";
+import { AddSubjectModal } from "@features/subject/AddSubjectModal";
+import { useSubject } from "@hooks/useSubject";
 
 export default function ContentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isClassroomModalOpen, setIsClassroomModalOpen] = useState(false);
-  const classrooms = useClassroom.get();
-  const hasClassrooms = Boolean(classrooms.data?.length);
+  const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
+  const subjects = useSubject.get();
+  const hasSubjects = Boolean(subjects.data?.length);
 
   return (
     <section aria-labelledby="content-title">
@@ -24,15 +24,15 @@ export default function ContentPage() {
         <Button.Root
           type="button"
           onClick={() =>
-            hasClassrooms
+            hasSubjects
               ? setIsModalOpen(true)
-              : setIsClassroomModalOpen(true)
+              : setIsSubjectModalOpen(true)
           }
           className="w-full shrink-0 sm:w-auto"
         >
           <Button.Icon icon={Plus} />
           <Button.Text>
-            {hasClassrooms ? "Adicionar conteúdo" : "Adicionar matéria"}
+            {hasSubjects ? "Adicionar conteúdo" : "Adicionar matéria"}
           </Button.Text>
         </Button.Root>
         {isModalOpen && (
@@ -41,12 +41,12 @@ export default function ContentPage() {
       </div>
       <ListContent
         onAddContent={() => setIsModalOpen(true)}
-        onAddClassroom={() => setIsClassroomModalOpen(true)}
+        onAddSubject={() => setIsSubjectModalOpen(true)}
       />
-      {isClassroomModalOpen && (
-        <AddClassroomModal
+      {isSubjectModalOpen && (
+        <AddSubjectModal
           open
-          onClose={() => setIsClassroomModalOpen(false)}
+          onClose={() => setIsSubjectModalOpen(false)}
         />
       )}
     </section>

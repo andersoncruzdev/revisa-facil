@@ -1,4 +1,4 @@
-import { useClassroom } from "@hooks/useClassroom";
+import { useSubject } from "@hooks/useSubject";
 import { useContent } from "@hooks/useContent";
 import { Input } from "@shared/components/Input";
 import { Modal } from "@shared/components/Modal";
@@ -19,7 +19,7 @@ export default function AddContentModal({
 }: AddContentModalProps) {
   const addContent = useContent.add();
   const updateContent = useContent.update();
-  const getClassroom = useClassroom.get();
+  const getSubject = useSubject.get();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,10 +27,10 @@ export default function AddContentModal({
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const classroomId = Number(formData.get("classroom"));
+    const subjectId = Number(formData.get("subject"));
     const content = (formData.get("content") as string).trim();
 
-    if (!classroomId || !content) return;
+    if (!subjectId || !content) return;
 
     const mutationOptions = {
       onSuccess: () => {
@@ -43,7 +43,7 @@ export default function AddContentModal({
       updateContent.mutate(
         {
           idContent: contentToEdit.id,
-          data: { content, idClassroom: classroomId },
+          data: { content, subjectId: subjectId },
         },
         mutationOptions,
       );
@@ -53,7 +53,7 @@ export default function AddContentModal({
     const today = new Date();
     addContent.mutate(
       {
-        idClassroom: classroomId,
+        subjectId: subjectId,
         data: {
           content,
           studied: actionsDate.format(today),
@@ -64,7 +64,7 @@ export default function AddContentModal({
     );
   };
 
-  const classroomOptions = getClassroom.data?.map(({ id, name }) => ({
+  const subjectOptions = getSubject.data?.map(({ id, name }) => ({
     id,
     name,
   }));
@@ -83,11 +83,11 @@ export default function AddContentModal({
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"
         />
         <Input.Selected
-          id="classroom-name-classroom"
+          id="subject-name-subject"
           label="Nome da matéria:"
-          name="classroom"
-          defaultValue={contentToEdit?.idClassroom}
-          items={classroomOptions}
+          name="subject"
+          defaultValue={contentToEdit?.subjectId}
+          items={subjectOptions}
           required
           autoFocus
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"

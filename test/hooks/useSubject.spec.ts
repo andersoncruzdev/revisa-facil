@@ -1,12 +1,12 @@
 import { waitFor } from "@testing-library/react";
-import { actionsClassroom } from "@data/classroom";
-import { useClassroom } from "@hooks/useClassroom";
+import { actionsSubject } from "@data/subject";
+import { useSubject } from "@hooks/useSubject";
 
 import { useMocks, useRenderHooks } from "@test/helpers/mocks";
 import { Mock } from "vitest";
 
-vi.mock("@data/classroom", () => ({
-  actionsClassroom: {
+vi.mock("@data/subject", () => ({
+  actionsSubject: {
     get: vi.fn(),
     add: vi.fn(),
     edit: vi.fn(),
@@ -14,13 +14,13 @@ vi.mock("@data/classroom", () => ({
   },
 }));
 
-describe("hooks: useClassroom", () => {
+describe("hooks: useSubject", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it("useClassroom - GET", async () => {
-    const classroomsMock = [
+  it("useSubject - GET", async () => {
+    const subjectsMock = [
       {
         id: 1,
         color: "white",
@@ -29,26 +29,26 @@ describe("hooks: useClassroom", () => {
     ];
 
     const { queryClient } = useMocks(
-      actionsClassroom.get as Mock,
-      classroomsMock,
+      actionsSubject.get as Mock,
+      subjectsMock,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.get);
+    const { result } = useRenderHooks(queryClient, useSubject.get);
 
     await waitFor(() => {
-      expect(result.current.data).toEqual(classroomsMock);
+      expect(result.current.data).toEqual(subjectsMock);
     });
 
-    expect(actionsClassroom.get).toHaveBeenCalledTimes(1);
+    expect(actionsSubject.get).toHaveBeenCalledTimes(1);
   });
 
-  it("useClassroom - ADD", async () => {
+  it("useSubject - ADD", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.add as Mock,
+      actionsSubject.add as Mock,
       true,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.add);
+    const { result } = useRenderHooks(queryClient, useSubject.add);
 
     await result.current.mutateAsync({
       color: "white",
@@ -59,7 +59,7 @@ describe("hooks: useClassroom", () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(actionsClassroom.add).toHaveBeenCalledWith({
+    expect(actionsSubject.add).toHaveBeenCalledWith({
       color: "white",
       name: "white",
     });
@@ -67,13 +67,13 @@ describe("hooks: useClassroom", () => {
     expect(invalidateSpy).toHaveBeenCalled();
   });
 
-  it("useClassroom - ADD failed", async () => {
+  it("useSubject - ADD failed", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.add as Mock,
+      actionsSubject.add as Mock,
       false,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.add);
+    const { result } = useRenderHooks(queryClient, useSubject.add);
 
     await expect(
       result.current.mutateAsync({
@@ -82,7 +82,7 @@ describe("hooks: useClassroom", () => {
       }),
     ).rejects.toThrow("Não foi possível adicionar a matéria");
 
-    expect(actionsClassroom.add).toHaveBeenCalledWith({
+    expect(actionsSubject.add).toHaveBeenCalledWith({
       color: "white",
       name: "white",
     });
@@ -90,16 +90,16 @@ describe("hooks: useClassroom", () => {
     expect(invalidateSpy).not.toHaveBeenCalled();
   });
 
-  it("useClassroom - UPDATE", async () => {
+  it("useSubject - UPDATE", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.edit as Mock,
+      actionsSubject.edit as Mock,
       true,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.update);
+    const { result } = useRenderHooks(queryClient, useSubject.update);
 
     await result.current.mutateAsync({
-      idClassroom: 1,
+      subjectId: 1,
       data: {
         color: "black",
         name: "white",
@@ -110,7 +110,7 @@ describe("hooks: useClassroom", () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(actionsClassroom.edit).toHaveBeenCalledWith(1, {
+    expect(actionsSubject.edit).toHaveBeenCalledWith(1, {
       color: "black",
       name: "white",
     });
@@ -118,17 +118,17 @@ describe("hooks: useClassroom", () => {
     expect(invalidateSpy).toHaveBeenCalled();
   });
 
-  it("useClassroom - UPDATE failed", async () => {
+  it("useSubject - UPDATE failed", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.edit as Mock,
+      actionsSubject.edit as Mock,
       false,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.update);
+    const { result } = useRenderHooks(queryClient, useSubject.update);
 
     await expect(
       result.current.mutateAsync({
-        idClassroom: 1,
+        subjectId: 1,
         data: {
           color: "black",
           name: "white",
@@ -136,7 +136,7 @@ describe("hooks: useClassroom", () => {
       }),
     ).rejects.toThrow("Não foi possível editar a matéria");
 
-    expect(actionsClassroom.edit).toHaveBeenCalledWith(1, {
+    expect(actionsSubject.edit).toHaveBeenCalledWith(1, {
       color: "black",
       name: "white",
     });
@@ -144,41 +144,41 @@ describe("hooks: useClassroom", () => {
     expect(invalidateSpy).not.toHaveBeenCalled();
   });
 
-  it("useClassroom - DELETE", async () => {
+  it("useSubject - DELETE", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.delete as Mock,
+      actionsSubject.delete as Mock,
       true,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.delete);
+    const { result } = useRenderHooks(queryClient, useSubject.delete);
 
     await result.current.mutateAsync({
-      idClassroom: 1,
+      subjectId: 1,
     });
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(actionsClassroom.delete).toHaveBeenCalledWith(1);
+    expect(actionsSubject.delete).toHaveBeenCalledWith(1);
     expect(invalidateSpy).toHaveBeenCalled();
   });
 
-  it("useClassroom - DELETE failed", async () => {
+  it("useSubject - DELETE failed", async () => {
     const { queryClient, invalidateSpy } = useMocks(
-      actionsClassroom.delete as Mock,
+      actionsSubject.delete as Mock,
       false,
     );
 
-    const { result } = useRenderHooks(queryClient, useClassroom.delete);
+    const { result } = useRenderHooks(queryClient, useSubject.delete);
 
     await expect(
       result.current.mutateAsync({
-        idClassroom: 1,
+        subjectId: 1,
       }),
     ).rejects.toThrow("Não foi possível deletar a matéria");
 
-    expect(actionsClassroom.delete).toHaveBeenCalledWith(1);
+    expect(actionsSubject.delete).toHaveBeenCalledWith(1);
     expect(invalidateSpy).not.toHaveBeenCalled();
   });
 });

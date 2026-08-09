@@ -2,7 +2,7 @@ import { Content } from "@types-app/study";
 import { actionsStudyStorage } from "./study-storage";
 import { utils } from "../utils/utils";
 
-export type NewContent = Omit<Content, "id" | "idClassroom">;
+export type NewContent = Omit<Content, "id" | "subjectId">;
 export type UpdateContent = Partial<Omit<Content, "id">>;
 
 const getContents = (): Content[] => {
@@ -12,20 +12,20 @@ const getContents = (): Content[] => {
 };
 
 const addContent = (
-  idClassroom: number,
+  subjectId: number,
   data: NewContent,
 ): boolean => {
   const storage = actionsStudyStorage.get();
 
   const subjectExists = storage.subjects.some(
-    (subject) => subject.id === idClassroom,
+    (subject) => subject.id === subjectId,
   );
 
   if (!subjectExists) return false;
 
   const newContent: Content = {
     id: utils.nextId(storage.contents),
-    idClassroom,
+    subjectId,
     ...data,
   };
 

@@ -1,4 +1,4 @@
-export type Classroom = {
+export type Subject = {
   id: number;
   name: string;
   color: string;
@@ -6,18 +6,18 @@ export type Classroom = {
 
 export type Content = {
   id: number;
-  idClassroom: number;
+  subjectId: number;
   content: string;
   studied: string;
   nextRevision: string;
 };
 
 export type StudyStorage = {
-  subjects: Classroom[];
+  subjects: Subject[];
   contents: Content[];
 };
 
-export type ClassroomWithContent = Classroom & {
+export type SubjectWithContent = Subject & {
   content: Content[];
 };
 

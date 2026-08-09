@@ -15,13 +15,13 @@ const useAddContent = () => {
 
   return useMutation({
     mutationFn: async ({
-      idClassroom,
+      subjectId,
       data,
     }: {
-      idClassroom: number;
+      subjectId: number;
       data: NewContent;
     }) => {
-      const result = actionsContent.add(idClassroom, data);
+      const result = actionsContent.add(subjectId, data);
 
       if (result === false) {
         throw new Error("Não foi possível adicionar o novo contéudo");

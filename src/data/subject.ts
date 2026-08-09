@@ -1,36 +1,36 @@
-import { Classroom } from "@types-app/study";
+import { Subject } from "@types-app/study";
 import { utils } from "../utils/utils";
 import { actionsStudyStorage } from "./study-storage";
 
-export type NewClassroom = Omit<Classroom, "id">;
-export type EditClassroom = Partial<Omit<Classroom, "id">>;
+export type NewSubject = Omit<Subject, "id">;
+export type EditSubject = Partial<Omit<Subject, "id">>;
 
 const normalizeName = (name: string): string => {
   return name.trim().toLowerCase();
 };
 
-const getClassroom = (): Classroom[] => {
+const getSubject = (): Subject[] => {
   const studyStorage = actionsStudyStorage.get();
 
   return studyStorage.subjects;
 };
 
-const addNewClassroom = (data: NewClassroom): boolean => {
+const addNewSubject = (data: NewSubject): boolean => {
   const studyStorage = actionsStudyStorage.get();
 
   const normalizedName = normalizeName(data.name);
 
-  const classroomExists = utils.param(
+  const subjectExists = utils.param(
     studyStorage.subjects,
     "name",
     normalizedName,
   );
 
-  if (classroomExists) {
+  if (subjectExists) {
     return false;
   }
 
-  const newClassroom: Classroom = {
+  const newSubject: Subject = {
     ...data,
     id: utils.nextId(studyStorage.subjects),
     name: normalizedName,
@@ -38,21 +38,21 @@ const addNewClassroom = (data: NewClassroom): boolean => {
 
   return actionsStudyStorage.save({
     ...studyStorage,
-    subjects: [...studyStorage.subjects, newClassroom],
+    subjects: [...studyStorage.subjects, newSubject],
   });
 };
 
-const editClassroom = (idClassroom: number, data: EditClassroom): boolean => {
+const editSubject = (subjectId: number, data: EditSubject): boolean => {
   const studyStorage = actionsStudyStorage.get();
 
-  const indexClassroom = utils.index(studyStorage.subjects, idClassroom);
+  const indexSubject = utils.index(studyStorage.subjects, subjectId);
 
-  if (indexClassroom === undefined) {
+  if (indexSubject === undefined) {
     return false;
   }
 
-  const updatedClassroom: Classroom = {
-    ...studyStorage.subjects[indexClassroom],
+  const updatedSubject: Subject = {
+    ...studyStorage.subjects[indexSubject],
     ...data,
   };
 
@@ -61,19 +61,19 @@ const editClassroom = (idClassroom: number, data: EditClassroom): boolean => {
 
     const nameExists = studyStorage.subjects.some(
       (subject) =>
-        subject.id !== idClassroom && subject.name === normalizedName,
+        subject.id !== subjectId && subject.name === normalizedName,
     );
 
     if (nameExists) {
       return false;
     }
 
-    updatedClassroom.name = normalizedName;
+    updatedSubject.name = normalizedName;
   }
 
   const updatedSubjects = [...studyStorage.subjects];
 
-  updatedSubjects[indexClassroom] = updatedClassroom;
+  updatedSubjects[indexSubject] = updatedSubject;
 
   return actionsStudyStorage.save({
     ...studyStorage,
@@ -81,21 +81,21 @@ const editClassroom = (idClassroom: number, data: EditClassroom): boolean => {
   });
 };
 
-const deleteClassroom = (idClassroom: number): boolean => {
+const deleteSubject = (subjectId: number): boolean => {
   const studyStorage = actionsStudyStorage.get();
 
-  const classroomExists = utils.param(studyStorage.subjects, "id", idClassroom);
+  const subjectExists = utils.param(studyStorage.subjects, "id", subjectId);
 
-  if (!classroomExists) {
+  if (!subjectExists) {
     return false;
   }
 
   const updatedSubjects = studyStorage.subjects.filter(
-    (subject) => subject.id !== idClassroom,
+    (subject) => subject.id !== subjectId,
   );
 
   const updatedContents = studyStorage.contents.filter(
-    (content) => content.idClassroom !== idClassroom,
+    (content) => content.subjectId !== subjectId,
   );
 
   return actionsStudyStorage.save({
@@ -104,9 +104,9 @@ const deleteClassroom = (idClassroom: number): boolean => {
   });
 };
 
-export const actionsClassroom = {
-  get: getClassroom,
-  add: addNewClassroom,
-  edit: editClassroom,
-  delete: deleteClassroom,
+export const actionsSubject = {
+  get: getSubject,
+  add: addNewSubject,
+  edit: editSubject,
+  delete: deleteSubject,
 };

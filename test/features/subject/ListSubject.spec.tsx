@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useClassroom } from "@hooks/useClassroom";
-import ListClassroom from "@features/classroom/ListClassroom";
-import type { Classroom } from "@types-app/study";
+import { useSubject } from "@hooks/useSubject";
+import ListSubject from "@features/subject/ListSubject";
+import type { Subject } from "@types-app/study";
 
-vi.mock("@hooks/useClassroom", () => ({
-  useClassroom: {
+vi.mock("@hooks/useSubject", () => ({
+  useSubject: {
     get: vi.fn(),
     add: vi.fn(),
     delete: vi.fn(),
@@ -13,10 +13,10 @@ vi.mock("@hooks/useClassroom", () => ({
   },
 }));
 
-type GetClassroomQuery = ReturnType<typeof useClassroom.get>;
-type DeleteClassroomMutation = ReturnType<typeof useClassroom.delete>;
+type GetSubjectQuery = ReturnType<typeof useSubject.get>;
+type DeleteSubjectMutation = ReturnType<typeof useSubject.delete>;
 
-const classrooms = [
+const subjects = [
   {
     id: 1,
     name: "Matemática",
@@ -27,49 +27,49 @@ const classrooms = [
     name: "História",
     color: "#16a34a",
   },
-] satisfies Classroom[];
+] satisfies Subject[];
 
-const setupClassroomHooks = (data: Classroom[] | undefined = classrooms) => {
+const setupSubjectHooks = (data: Subject[] | undefined = subjects) => {
   const mutate = vi.fn();
   const update = vi.fn();
 
-  vi.mocked(useClassroom.get).mockReturnValue({
+  vi.mocked(useSubject.get).mockReturnValue({
     data,
-  } as GetClassroomQuery);
-  vi.mocked(useClassroom.delete).mockReturnValue({
+  } as GetSubjectQuery);
+  vi.mocked(useSubject.delete).mockReturnValue({
     mutate,
-  } as unknown as DeleteClassroomMutation);
-  vi.mocked(useClassroom.add).mockReturnValue({
+  } as unknown as DeleteSubjectMutation);
+  vi.mocked(useSubject.add).mockReturnValue({
     mutate: vi.fn(),
     isPending: false,
-  } as unknown as ReturnType<typeof useClassroom.add>);
-  vi.mocked(useClassroom.update).mockReturnValue({
+  } as unknown as ReturnType<typeof useSubject.add>);
+  vi.mocked(useSubject.update).mockReturnValue({
     mutate: update,
     isPending: false,
-  } as unknown as ReturnType<typeof useClassroom.update>);
+  } as unknown as ReturnType<typeof useSubject.update>);
 
   return { mutate, update };
 };
 
-describe("Testes de verificação do 'ListClassroom'", () => {
+describe("Testes de verificação do 'ListSubject'", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it("renderiza a lista de matérias cadastradas", () => {
-    setupClassroomHooks();
+    setupSubjectHooks();
 
-    render(<ListClassroom />);
+    render(<ListSubject />);
 
     expect(screen.getByLabelText("lista de matérias")).toBeInTheDocument();
-    const classroomCard = screen.getByLabelText("Divisão da matéria: Matemática");
+    const subjectCard = screen.getByLabelText("Divisão da matéria: Matemática");
 
-    expect(classroomCard).toHaveClass(
+    expect(subjectCard).toHaveClass(
       "rounded-xl",
       "border-stone-300",
       "bg-white",
     );
-    expect(classroomCard).toHaveStyle({
+    expect(subjectCard).toHaveStyle({
       boxShadow: "inset 6px 0 0 #2563eb",
     });
     expect(screen.getByLabelText("Divisão da matéria: História")).toBeInTheDocument();
@@ -79,10 +79,10 @@ describe("Testes de verificação do 'ListClassroom'", () => {
 
   it("oferece cadastrar a primeira matéria no estado vazio", async () => {
     const user = userEvent.setup();
-    const onAddClassroom = vi.fn();
-    setupClassroomHooks([]);
+    const onAddSubject = vi.fn();
+    setupSubjectHooks([]);
 
-    render(<ListClassroom onAddClassroom={onAddClassroom} />);
+    render(<ListSubject onAddSubject={onAddSubject} />);
 
     expect(
       screen.getByText("Você ainda não possui matérias."),
@@ -92,14 +92,14 @@ describe("Testes de verificação do 'ListClassroom'", () => {
       screen.getByRole("button", { name: "Adicionar primeira matéria" }),
     );
 
-    expect(onAddClassroom).toHaveBeenCalledTimes(1);
+    expect(onAddSubject).toHaveBeenCalledTimes(1);
   });
 
   it("solicita a exclusão da matéria selecionada", async () => {
     const user = userEvent.setup();
-    const { mutate } = setupClassroomHooks();
+    const { mutate } = setupSubjectHooks();
 
-    render(<ListClassroom />);
+    render(<ListSubject />);
 
     await user.click(
       screen.getByRole("button", { name: "Excluir matéria Matemática" }),
@@ -115,14 +115,14 @@ describe("Testes de verificação do 'ListClassroom'", () => {
     await user.click(screen.getByRole("button", { name: "Confirmar exclusão" }));
 
     expect(mutate).toHaveBeenCalledTimes(1);
-    expect(mutate).toHaveBeenCalledWith({ idClassroom: 1 });
+    expect(mutate).toHaveBeenCalledWith({ subjectId: 1 });
   });
 
   it("cancela a exclusão da matéria", async () => {
     const user = userEvent.setup();
-    const { mutate } = setupClassroomHooks();
+    const { mutate } = setupSubjectHooks();
 
-    render(<ListClassroom />);
+    render(<ListSubject />);
 
     await user.click(
       screen.getByRole("button", { name: "Excluir matéria Matemática" }),
@@ -135,9 +135,9 @@ describe("Testes de verificação do 'ListClassroom'", () => {
 
   it("edita a matéria selecionada", async () => {
     const user = userEvent.setup();
-    const { update } = setupClassroomHooks();
+    const { update } = setupSubjectHooks();
 
-    render(<ListClassroom />);
+    render(<ListSubject />);
 
     await user.click(
       screen.getByRole("button", { name: "Editar matéria Matemática" }),
@@ -152,7 +152,7 @@ describe("Testes de verificação do 'ListClassroom'", () => {
 
     expect(update).toHaveBeenCalledWith(
       {
-        idClassroom: 1,
+        subjectId: 1,
         data: { name: "Álgebra", color: "#2563eb" },
       },
       expect.objectContaining({ onSuccess: expect.any(Function) }),

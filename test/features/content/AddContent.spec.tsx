@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddContentModal from "@features/content/AddContent";
-import { useClassroom } from "@hooks/useClassroom";
+import { useSubject } from "@hooks/useSubject";
 import { useContent } from "@hooks/useContent";
 
-vi.mock("@hooks/useClassroom", () => ({
-  useClassroom: {
+vi.mock("@hooks/useSubject", () => ({
+  useSubject: {
     get: vi.fn(),
   },
 }));
@@ -24,12 +24,12 @@ describe("AddContentModal", () => {
     const onClose = vi.fn();
     vi.setSystemTime(new Date(2026, 6, 25));
 
-    vi.mocked(useClassroom.get).mockReturnValue({
+    vi.mocked(useSubject.get).mockReturnValue({
       data: [
         { id: 1, name: "Português", color: "#000" },
         { id: 2, name: "Matemática", color: "#fff" },
       ],
-    } as ReturnType<typeof useClassroom.get>);
+    } as ReturnType<typeof useSubject.get>);
     vi.mocked(useContent.add).mockReturnValue({
       mutate,
       isPending: false,
@@ -53,7 +53,7 @@ describe("AddContentModal", () => {
 
     expect(mutate).toHaveBeenCalledWith(
       {
-        idClassroom: 2,
+        subjectId: 2,
         data: {
           content: "Equações",
           studied: "25/07/2026",
