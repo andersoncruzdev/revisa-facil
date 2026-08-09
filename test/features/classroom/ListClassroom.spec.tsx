@@ -95,8 +95,32 @@ describe("Testes de verificação do 'ListClassroom'", () => {
       screen.getByRole("button", { name: "Excluir matéria Matemática" }),
     );
 
+    expect(mutate).not.toHaveBeenCalled();
+    expect(
+      screen.getByRole("alertdialog", { name: "Excluir matéria?" }),
+    ).toHaveTextContent(
+      "Todos os conteúdos vinculados a Matemática também serão excluídos.",
+    );
+
+    await user.click(screen.getByRole("button", { name: "Confirmar exclusão" }));
+
     expect(mutate).toHaveBeenCalledTimes(1);
     expect(mutate).toHaveBeenCalledWith({ idClassroom: 1 });
+  });
+
+  it("cancela a exclusão da matéria", async () => {
+    const user = userEvent.setup();
+    const { mutate } = setupClassroomHooks();
+
+    render(<ListClassroom />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Excluir matéria Matemática" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+
+    expect(mutate).not.toHaveBeenCalled();
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
   it("edita a matéria selecionada", async () => {

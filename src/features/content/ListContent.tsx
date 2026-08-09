@@ -5,17 +5,22 @@ import { Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import type { Content } from "@types-app/study";
 import AddContentModal from "./AddContent";
+import { ConfirmDialog } from "@shared/components/ConfirmDialog";
 
 const fallbackShadowColor = "#a1a1aa";
 
 export default function ListContent() {
   const [contentToEdit, setContentToEdit] = useState<Content>();
+  const [contentToDelete, setContentToDelete] = useState<Content>();
   const getContent = useContent.get();
   const deleteContent = useContent.delete();
   const getClassroom = useClassroom.get();
 
-  const deleteWithId = (id: number) => {
-    deleteContent.mutate({ idContent: id });
+  const confirmDelete = () => {
+    if (!contentToDelete) return;
+
+    deleteContent.mutate({ idContent: contentToDelete.id });
+    setContentToDelete(undefined);
   };
 
   if (getContent.data?.length) {
@@ -60,7 +65,7 @@ export default function ListContent() {
                     aria-label={`Excluir conteúdo ${content.content}`}
                     color="red"
                     rounded
-                    onClick={() => deleteWithId(content.id)}
+                    onClick={() => setContentToDelete(content)}
                   >
                     <Button.Icon icon={Trash} />
                   </Button.Root>
@@ -74,6 +79,15 @@ export default function ListContent() {
             open
             contentToEdit={contentToEdit}
             onClose={() => setContentToEdit(undefined)}
+          />
+        )}
+        {contentToDelete && (
+          <ConfirmDialog
+            open
+            title="Excluir conteúdo?"
+            description={`O conteúdo ${contentToDelete.content} será excluído permanentemente. Esta ação não pode ser desfeita.`}
+            onCancel={() => setContentToDelete(undefined)}
+            onConfirm={confirmDelete}
           />
         )}
       </section>

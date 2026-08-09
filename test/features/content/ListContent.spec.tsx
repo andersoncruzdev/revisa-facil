@@ -101,7 +101,31 @@ describe("ListContent", () => {
       }),
     );
 
+    expect(mutate).not.toHaveBeenCalled();
+    expect(
+      screen.getByRole("alertdialog", { name: "Excluir conteúdo?" }),
+    ).toHaveTextContent("Esta ação não pode ser desfeita.");
+
+    await user.click(screen.getByRole("button", { name: "Confirmar exclusão" }));
+
     expect(mutate).toHaveBeenCalledWith({ idContent: 1 });
+  });
+
+  it("cancela a exclusão do conteúdo", async () => {
+    const user = userEvent.setup();
+    const { mutate } = setupHooks();
+
+    render(<ListContent />);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Excluir conteúdo Brasil Colônia",
+      }),
+    );
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+
+    expect(mutate).not.toHaveBeenCalled();
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
   it("edita o conteúdo e a matéria vinculada", async () => {
