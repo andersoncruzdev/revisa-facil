@@ -73,7 +73,7 @@ export default function SideBar({ options, action, className = "", ...props }: S
         type="button"
         aria-label="Adicionar nova matéria"
         onClick={action}
-        className="ml-1 min-w-16 flex-col px-2 text-[0.6875rem] md:ml-0 md:min-w-0 md:flex-row md:px-3 md:py-3 md:text-sm"
+        className="max-md:hidden md:ml-0 md:min-w-0 md:flex-row md:px-3 md:py-3 md:text-sm"
       >
         <Button.Icon icon={Plus} />
         <Button.Text className={expanded ? "md:block" : "md:hidden"}>
