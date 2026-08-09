@@ -71,7 +71,11 @@ describe("SideBar", () => {
       name: "Adicionar nova matéria",
     });
 
-    expect(addButton).toHaveClass("bg-blue-100", "text-blue-900");
+    expect(addButton).toHaveClass(
+      "max-md:hidden",
+      "bg-blue-100",
+      "text-blue-900",
+    );
 
     await user.click(addButton);
 
