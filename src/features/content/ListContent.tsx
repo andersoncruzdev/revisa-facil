@@ -1,11 +1,15 @@
 import { useClassroom } from "@hooks/useClassroom";
 import { useContent } from "@hooks/useContent";
 import { Button } from "@shared/components/Button";
-import { Trash } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
+import { useState } from "react";
+import type { Content } from "@types-app/study";
+import AddContentModal from "./AddContent";
 
 const fallbackShadowColor = "#a1a1aa";
 
 export default function ListContent() {
+  const [contentToEdit, setContentToEdit] = useState<Content>();
   const getContent = useContent.get();
   const deleteContent = useContent.delete();
   const getClassroom = useClassroom.get();
@@ -41,18 +45,37 @@ export default function ListContent() {
                     </p>
                   )}
                 </div>
-                <Button.Root
-                  aria-label={`Excluir conteúdo ${content.content}`}
-                  color="red"
-                  rounded
-                  onClick={() => deleteWithId(content.id)}
-                >
-                  <Button.Icon icon={Trash} />
-                </Button.Root>
+                <div className="flex shrink-0 gap-2">
+                  <Button.Root
+                    type="button"
+                    aria-label={`Editar conteúdo ${content.content}`}
+                    color="slate"
+                    rounded
+                    onClick={() => setContentToEdit(content)}
+                  >
+                    <Button.Icon icon={Pencil} />
+                  </Button.Root>
+                  <Button.Root
+                    type="button"
+                    aria-label={`Excluir conteúdo ${content.content}`}
+                    color="red"
+                    rounded
+                    onClick={() => deleteWithId(content.id)}
+                  >
+                    <Button.Icon icon={Trash} />
+                  </Button.Root>
+                </div>
               </article>
             );
           })}
         </div>
+        {contentToEdit && (
+          <AddContentModal
+            open
+            contentToEdit={contentToEdit}
+            onClose={() => setContentToEdit(undefined)}
+          />
+        )}
       </section>
     );
   }

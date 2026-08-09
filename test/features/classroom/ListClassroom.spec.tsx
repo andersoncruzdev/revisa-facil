@@ -7,7 +7,9 @@ import type { Classroom } from "@types-app/study";
 vi.mock("@hooks/useClassroom", () => ({
   useClassroom: {
     get: vi.fn(),
+    add: vi.fn(),
     delete: vi.fn(),
+    update: vi.fn(),
   },
 }));
 
@@ -29,6 +31,7 @@ const classrooms = [
 
 const setupClassroomHooks = (data: Classroom[] | undefined = classrooms) => {
   const mutate = vi.fn();
+  const update = vi.fn();
 
   vi.mocked(useClassroom.get).mockReturnValue({
     data,
@@ -36,8 +39,16 @@ const setupClassroomHooks = (data: Classroom[] | undefined = classrooms) => {
   vi.mocked(useClassroom.delete).mockReturnValue({
     mutate,
   } as unknown as DeleteClassroomMutation);
+  vi.mocked(useClassroom.add).mockReturnValue({
+    mutate: vi.fn(),
+    isPending: false,
+  } as unknown as ReturnType<typeof useClassroom.add>);
+  vi.mocked(useClassroom.update).mockReturnValue({
+    mutate: update,
+    isPending: false,
+  } as unknown as ReturnType<typeof useClassroom.update>);
 
-  return { mutate };
+  return { mutate, update };
 };
 
 describe("Testes de verificação do 'ListClassroom'", () => {
@@ -86,5 +97,31 @@ describe("Testes de verificação do 'ListClassroom'", () => {
 
     expect(mutate).toHaveBeenCalledTimes(1);
     expect(mutate).toHaveBeenCalledWith({ idClassroom: 1 });
+  });
+
+  it("edita a matéria selecionada", async () => {
+    const user = userEvent.setup();
+    const { update } = setupClassroomHooks();
+
+    render(<ListClassroom />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Editar matéria Matemática" }),
+    );
+
+    const nameInput = screen.getByRole("textbox", { name: "Nome da matéria:" });
+    expect(nameInput).toHaveValue("Matemática");
+
+    await user.clear(nameInput);
+    await user.type(nameInput, "Álgebra");
+    await user.click(screen.getByRole("button", { name: "Salvar alterações" }));
+
+    expect(update).toHaveBeenCalledWith(
+      {
+        idClassroom: 1,
+        data: { name: "Álgebra", color: "#2563eb" },
+      },
+      expect.objectContaining({ onSuccess: expect.any(Function) }),
+    );
   });
 });

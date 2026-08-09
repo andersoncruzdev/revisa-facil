@@ -15,6 +15,7 @@ interface ModalProps {
   readonly open: boolean;
   readonly onClose: () => void;
   readonly isSubmitting?: boolean;
+  readonly submitLabel?: string;
 }
 
 export function Modal({
@@ -23,6 +24,7 @@ export function Modal({
   open,
   onClose,
   isSubmitting = false,
+  submitLabel = "Enviar",
 }: ModalProps) {
   const titleId = useId();
   const generatedFormId = useId();
@@ -92,7 +94,7 @@ export function Modal({
             disabled={isSubmitting}
             className="rounded-lg bg-blue-700 px-4 py-2.5 font-semibold text-white transition-colors hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60 motion-reduce:transition-none"
           >
-            {isSubmitting ? "Enviando..." : "Enviar"}
+            {isSubmitting ? "Enviando..." : submitLabel}
           </button>
         </footer>
       </section>

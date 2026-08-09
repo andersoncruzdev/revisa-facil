@@ -3,7 +3,7 @@ import { actionsStudyStorage } from "./study-storage";
 import { utils } from "../utils/utils";
 
 export type NewContent = Omit<Content, "id" | "idClassroom">;
-export type UpdateContent = Partial<Omit<Content, "id" | "idClassroom">>;
+export type UpdateContent = Partial<Omit<Content, "id">>;
 
 const getContents = (): Content[] => {
   const storage = actionsStudyStorage.get();

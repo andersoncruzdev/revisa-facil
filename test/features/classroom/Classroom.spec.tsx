@@ -9,6 +9,7 @@ vi.mock("@hooks/useClassroom", () => ({
     get: vi.fn(),
     delete: vi.fn(),
     add: vi.fn(),
+    update: vi.fn(),
   },
 }));
 
@@ -33,6 +34,10 @@ describe("ClassroomPage", () => {
       mutate: vi.fn(),
       isPending: false,
     } as unknown as AddClassroomMutation);
+    vi.mocked(useClassroom.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as unknown as ReturnType<typeof useClassroom.update>);
   });
 
   it("apresenta e lista as matérias cadastradas", () => {

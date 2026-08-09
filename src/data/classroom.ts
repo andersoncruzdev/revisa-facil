@@ -59,10 +59,9 @@ const editClassroom = (idClassroom: number, data: EditClassroom): boolean => {
   if (data.name) {
     const normalizedName = normalizeName(data.name);
 
-    const nameExists = utils.param(
-      studyStorage.subjects,
-      "name",
-      normalizedName,
+    const nameExists = studyStorage.subjects.some(
+      (subject) =>
+        subject.id !== idClassroom && subject.name === normalizedName,
     );
 
     if (nameExists) {

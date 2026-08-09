@@ -13,6 +13,7 @@ vi.mock("@hooks/useClassroom", () => ({
 vi.mock("@hooks/useContent", () => ({
   useContent: {
     add: vi.fn(),
+    update: vi.fn(),
   },
 }));
 
@@ -33,6 +34,10 @@ describe("AddContentModal", () => {
       mutate,
       isPending: false,
     } as ReturnType<typeof useContent.add>);
+    vi.mocked(useContent.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as unknown as ReturnType<typeof useContent.update>);
 
     render(<AddContentModal open onClose={onClose} />);
 

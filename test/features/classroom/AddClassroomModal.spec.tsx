@@ -7,6 +7,7 @@ import { AddClassroomModal } from "@features/classroom/AddClassroomModal";
 vi.mock("@hooks/useClassroom", () => ({
   useClassroom: {
     add: vi.fn(),
+    update: vi.fn(),
   },
 }));
 
@@ -22,6 +23,10 @@ describe("AddClassroomModal", () => {
       mutate,
       isPending: false,
     } as unknown as AddClassroomMutation);
+    vi.mocked(useClassroom.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+    } as unknown as ReturnType<typeof useClassroom.update>);
 
     render(<AddClassroomModal open onClose={onClose} />);
 
