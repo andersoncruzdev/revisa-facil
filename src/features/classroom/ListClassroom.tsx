@@ -7,14 +7,19 @@ import { Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import type { Classroom } from "@types-app/study";
 import { AddClassroomModal } from "./AddClassroomModal";
+import { ConfirmDialog } from "@shared/components/ConfirmDialog";
 
 export default function ListClassroom() {
   const [classroomToEdit, setClassroomToEdit] = useState<Classroom>();
+  const [classroomToDelete, setClassroomToDelete] = useState<Classroom>();
   const getClassroom = useClassroom.get();
   const deleteClassroom = useClassroom.delete();
 
-  const deleteWithId = (id: number) => {
-    deleteClassroom.mutate({ idClassroom: id });
+  const confirmDelete = () => {
+    if (!classroomToDelete) return;
+
+    deleteClassroom.mutate({ idClassroom: classroomToDelete.id });
+    setClassroomToDelete(undefined);
   };
 
   if (getClassroom.data?.length) {
@@ -48,7 +53,7 @@ export default function ListClassroom() {
                   aria-label={`Excluir matéria ${classroom.name}`}
                   color="red"
                   rounded
-                  onClick={() => deleteWithId(classroom.id)}
+                  onClick={() => setClassroomToDelete(classroom)}
                 >
                   <Button.Icon icon={Trash} />
                 </Button.Root>
@@ -61,6 +66,15 @@ export default function ListClassroom() {
             open
             classroom={classroomToEdit}
             onClose={() => setClassroomToEdit(undefined)}
+          />
+        )}
+        {classroomToDelete && (
+          <ConfirmDialog
+            open
+            title="Excluir matéria?"
+            description={`Todos os conteúdos vinculados a ${classroomToDelete.name} também serão excluídos.`}
+            onCancel={() => setClassroomToDelete(undefined)}
+            onConfirm={confirmDelete}
           />
         )}
       </section>
