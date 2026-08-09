@@ -1,7 +1,7 @@
 import { useClassroom } from "@hooks/useClassroom";
 import { useContent } from "@hooks/useContent";
 import { Button } from "@shared/components/Button";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import type { Content } from "@types-app/study";
 import AddContentModal from "./AddContent";
@@ -9,7 +9,15 @@ import { ConfirmDialog } from "@shared/components/ConfirmDialog";
 
 const fallbackShadowColor = "#a1a1aa";
 
-export default function ListContent() {
+interface ListContentProps {
+  readonly onAddContent?: () => void;
+  readonly onAddClassroom?: () => void;
+}
+
+export default function ListContent({
+  onAddContent,
+  onAddClassroom,
+}: ListContentProps) {
   const [contentToEdit, setContentToEdit] = useState<Content>();
   const [contentToDelete, setContentToDelete] = useState<Content>();
   const getContent = useContent.get();
@@ -94,9 +102,35 @@ export default function ListContent() {
     );
   }
 
+  const hasClassrooms = Boolean(getClassroom.data?.length);
+
   return (
-    <section aria-label="lista de conteúdos" className="mt-6">
-      <p className="font-bold text-zinc-600">Sem conteúdos cadastrados</p>
+    <section
+      aria-label="lista de conteúdos"
+      className="mt-6 flex flex-col items-start rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 sm:px-8"
+    >
+      <h2 className="text-lg font-semibold text-slate-950">
+        {hasClassrooms
+          ? "Você ainda não possui conteúdos."
+          : "Você precisa cadastrar uma matéria antes de adicionar conteúdos."}
+      </h2>
+      <p className="mt-1 max-w-lg text-sm leading-6 text-slate-600">
+        {hasClassrooms
+          ? "Adicione o primeiro conteúdo e mantenha seus estudos organizados por matéria."
+          : "A matéria será usada para agrupar seus conteúdos e acompanhar as próximas revisões."}
+      </p>
+      <Button.Root
+        type="button"
+        onClick={hasClassrooms ? onAddContent : onAddClassroom}
+        className="mt-5"
+      >
+        <Button.Icon icon={Plus} />
+        <Button.Text>
+          {hasClassrooms
+            ? "Adicionar primeiro conteúdo"
+            : "Adicionar primeira matéria"}
+        </Button.Text>
+      </Button.Root>
     </section>
   );
 }

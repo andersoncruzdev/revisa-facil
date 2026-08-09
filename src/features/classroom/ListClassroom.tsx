@@ -3,13 +3,19 @@
 import { useClassroom } from "@hooks/useClassroom";
 import { Button } from "@shared/components/Button";
 
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import type { Classroom } from "@types-app/study";
 import { AddClassroomModal } from "./AddClassroomModal";
 import { ConfirmDialog } from "@shared/components/ConfirmDialog";
 
-export default function ListClassroom() {
+interface ListClassroomProps {
+  readonly onAddClassroom?: () => void;
+}
+
+export default function ListClassroom({
+  onAddClassroom,
+}: ListClassroomProps) {
   const [classroomToEdit, setClassroomToEdit] = useState<Classroom>();
   const [classroomToDelete, setClassroomToDelete] = useState<Classroom>();
   const getClassroom = useClassroom.get();
@@ -82,8 +88,20 @@ export default function ListClassroom() {
   }
 
   return (
-    <section aria-label="lista de matérias" className="mt-6">
-      <p className="text-zinc-600 font-bold">Sem matérias cadastradas</p>
+    <section
+      aria-label="lista de matérias"
+      className="mt-6 flex flex-col items-start rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 sm:px-8"
+    >
+      <h2 className="text-lg font-semibold text-slate-950">
+        Você ainda não possui matérias.
+      </h2>
+      <p className="mt-1 max-w-lg text-sm leading-6 text-slate-600">
+        Cadastre sua primeira matéria para começar a organizar os conteúdos do seu ciclo de estudos.
+      </p>
+      <Button.Root type="button" onClick={onAddClassroom} className="mt-5">
+        <Button.Icon icon={Plus} />
+        <Button.Text>Adicionar primeira matéria</Button.Text>
+      </Button.Root>
     </section>
   );
 }

@@ -77,12 +77,22 @@ describe("Testes de verificação do 'ListClassroom'", () => {
     expect(screen.getByText("HISTÓRIA")).toBeInTheDocument();
   });
 
-  it("exibe mensagem quando não há matérias cadastradas", () => {
+  it("oferece cadastrar a primeira matéria no estado vazio", async () => {
+    const user = userEvent.setup();
+    const onAddClassroom = vi.fn();
     setupClassroomHooks([]);
 
-    render(<ListClassroom />);
+    render(<ListClassroom onAddClassroom={onAddClassroom} />);
 
-    expect(screen.getByText("Sem matérias cadastradas")).toBeInTheDocument();
+    expect(
+      screen.getByText("Você ainda não possui matérias."),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "Adicionar primeira matéria" }),
+    );
+
+    expect(onAddClassroom).toHaveBeenCalledTimes(1);
   });
 
   it("solicita a exclusão da matéria selecionada", async () => {

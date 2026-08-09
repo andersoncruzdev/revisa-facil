@@ -35,7 +35,10 @@ const contents = [
   },
 ] satisfies Content[];
 
-const setupHooks = (data: Content[] | undefined = contents) => {
+const setupHooks = (
+  data: Content[] | undefined = contents,
+  classroomData: Classroom[] | undefined = classrooms,
+) => {
   const mutate = vi.fn();
   const update = vi.fn();
 
@@ -54,7 +57,7 @@ const setupHooks = (data: Content[] | undefined = contents) => {
     isPending: false,
   } as unknown as ReturnType<typeof useContent.update>);
   vi.mocked(useClassroom.get).mockReturnValue({
-    data: classrooms,
+    data: classroomData,
   } as ReturnType<typeof useClassroom.get>);
 
   return { mutate, update };
@@ -81,12 +84,42 @@ describe("ListContent", () => {
     expect(screen.getByText("HISTÓRIA")).toBeInTheDocument();
   });
 
-  it("exibe mensagem quando não há conteúdos cadastrados", () => {
+  it("oferece cadastrar o primeiro conteúdo no estado vazio", async () => {
+    const user = userEvent.setup();
+    const onAddContent = vi.fn();
     setupHooks([]);
 
-    render(<ListContent />);
+    render(<ListContent onAddContent={onAddContent} />);
 
-    expect(screen.getByText("Sem conteúdos cadastrados")).toBeInTheDocument();
+    expect(
+      screen.getByText("Você ainda não possui conteúdos."),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "Adicionar primeiro conteúdo" }),
+    );
+
+    expect(onAddContent).toHaveBeenCalledTimes(1);
+  });
+
+  it("oferece cadastrar uma matéria antes do primeiro conteúdo", async () => {
+    const user = userEvent.setup();
+    const onAddClassroom = vi.fn();
+    setupHooks([], []);
+
+    render(<ListContent onAddClassroom={onAddClassroom} />);
+
+    expect(
+      screen.getByText(
+        "Você precisa cadastrar uma matéria antes de adicionar conteúdos.",
+      ),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "Adicionar primeira matéria" }),
+    );
+
+    expect(onAddClassroom).toHaveBeenCalledTimes(1);
   });
 
   it("solicita a exclusão do conteúdo selecionado", async () => {
