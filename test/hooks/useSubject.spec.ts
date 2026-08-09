@@ -4,6 +4,7 @@ import { useSubject } from "@hooks/useSubject";
 
 import { useMocks, useRenderHooks } from "@test/helpers/mocks";
 import { Mock } from "vitest";
+import { queryKeys } from "@data/query-keys";
 
 vi.mock("@data/subject", () => ({
   actionsSubject: {
@@ -64,7 +65,9 @@ describe("hooks: useSubject", () => {
       name: "white",
     });
 
-    expect(invalidateSpy).toHaveBeenCalled();
+    expect(invalidateSpy).toHaveBeenCalledWith({
+      queryKey: queryKeys.study.subjects,
+    });
   });
 
   it("useSubject - ADD failed", async () => {
@@ -161,7 +164,12 @@ describe("hooks: useSubject", () => {
     });
 
     expect(actionsSubject.delete).toHaveBeenCalledWith(1);
-    expect(invalidateSpy).toHaveBeenCalled();
+    expect(invalidateSpy).toHaveBeenCalledWith({
+      queryKey: queryKeys.study.subjects,
+    });
+    expect(invalidateSpy).toHaveBeenCalledWith({
+      queryKey: queryKeys.study.contents,
+    });
   });
 
   it("useSubject - DELETE failed", async () => {
@@ -176,7 +184,7 @@ describe("hooks: useSubject", () => {
       result.current.mutateAsync({
         subjectId: 1,
       }),
-    ).rejects.toThrow("Não foi possível deletar a matéria");
+    ).rejects.toThrow("Não foi possível excluir a matéria");
 
     expect(actionsSubject.delete).toHaveBeenCalledWith(1);
     expect(invalidateSpy).not.toHaveBeenCalled();

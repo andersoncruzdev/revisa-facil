@@ -49,4 +49,23 @@ describe("AddSubjectModal", () => {
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it("exibe o erro ao falhar ao adicionar uma matéria", () => {
+    vi.mocked(useSubject.add).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+      error: new Error("Não foi possível adicionar a matéria"),
+    } as unknown as AddSubjectMutation);
+    vi.mocked(useSubject.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+      error: null,
+    } as unknown as ReturnType<typeof useSubject.update>);
+
+    render(<AddSubjectModal open onClose={vi.fn()} />);
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Não foi possível adicionar a matéria",
+    );
+  });
 });

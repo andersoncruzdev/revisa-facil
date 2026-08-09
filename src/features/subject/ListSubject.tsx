@@ -8,6 +8,7 @@ import { useState } from "react";
 import type { Subject } from "@types-app/study";
 import { AddSubjectModal } from "./AddSubjectModal";
 import { ConfirmDialog } from "@shared/components/ConfirmDialog";
+import { ErrorMessage } from "@shared/components/ErrorMessage";
 
 interface ListSubjectProps {
   readonly onAddSubject?: () => void;
@@ -31,7 +32,8 @@ export default function ListSubject({
   if (getSubject.data?.length) {
     return (
       <section aria-label="lista de matérias" className="mt-6">
-        <div className="flex flex-col gap-4">
+        <ErrorMessage message={deleteSubject.error?.message} />
+        <div className={`flex flex-col gap-4 ${deleteSubject.error ? "mt-4" : ""}`}>
           {getSubject.data.map((subject) => (
             <div
               aria-label={`Divisão da matéria: ${subject.name}`}

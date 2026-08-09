@@ -161,6 +161,20 @@ describe("ListContent", () => {
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
+  it("exibe o erro ao falhar ao excluir um conteúdo", () => {
+    setupHooks();
+    vi.mocked(useContent.delete).mockReturnValue({
+      mutate: vi.fn(),
+      error: new Error("Não foi possível excluir o conteúdo"),
+    } as unknown as ReturnType<typeof useContent.delete>);
+
+    render(<ListContent />);
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Não foi possível excluir o conteúdo",
+    );
+  });
+
   it("edita o conteúdo e a matéria vinculada", async () => {
     const user = userEvent.setup();
     const { update } = setupHooks();

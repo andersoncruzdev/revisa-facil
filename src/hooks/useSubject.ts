@@ -63,13 +63,14 @@ const useDeleteSubject = () => {
       const success = actionsSubject.delete(subjectId);
 
       if (!success) {
-        throw new Error("Não foi possível deletar a matéria")
+        throw new Error("Não foi possível excluir a matéria")
       }
 
       return success;
     },
     onSuccess: () => {
         queryClient.invalidateQueries({queryKey: queryKeys.study.subjects})
+        queryClient.invalidateQueries({queryKey: queryKeys.study.contents})
     }
   });
 };

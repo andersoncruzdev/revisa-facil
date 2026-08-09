@@ -8,6 +8,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { ErrorMessage } from "@shared/components/ErrorMessage";
 
 interface ModalProps {
   readonly title: string;
@@ -16,6 +17,7 @@ interface ModalProps {
   readonly onClose: () => void;
   readonly isSubmitting?: boolean;
   readonly submitLabel?: string;
+  readonly errorMessage?: string;
 }
 
 export function Modal({
@@ -25,6 +27,7 @@ export function Modal({
   onClose,
   isSubmitting = false,
   submitLabel = "Enviar",
+  errorMessage,
 }: ModalProps) {
   const titleId = useId();
   const generatedFormId = useId();
@@ -78,6 +81,8 @@ export function Modal({
         </header>
 
         <div className="max-h-[65vh] overflow-y-auto px-5 py-5 sm:px-6">
+          <ErrorMessage message={errorMessage} />
+          {errorMessage && <div className="h-5" aria-hidden="true" />}
           {cloneElement(content, { id: formId })}
         </div>
         <footer className="flex flex-col-reverse gap-3 border-t border-slate-200 px-5 py-4 sm:flex-row sm:justify-end sm:px-6">

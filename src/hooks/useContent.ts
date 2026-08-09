@@ -24,7 +24,7 @@ const useAddContent = () => {
       const result = actionsContent.add(subjectId, data);
 
       if (result === false) {
-        throw new Error("Não foi possível adicionar o novo contéudo");
+        throw new Error("Não foi possível adicionar o conteúdo");
       }
 
       return result;
@@ -68,7 +68,7 @@ const useDeleteContent = () => {
       const result = actionsContent.delete(idContent);
 
       if (result === false) {
-        throw new Error("Não foi possível editar o conteúdo");
+        throw new Error("Não foi possível excluir o conteúdo");
       }
 
       return result;

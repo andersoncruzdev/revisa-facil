@@ -87,7 +87,7 @@ describe("hooks: useContent", () => {
           nextRevision: "06/06/2026",
         },
       }),
-    ).rejects.toThrow("Não foi possível adicionar o novo contéudo");
+    ).rejects.toThrow("Não foi possível adicionar o conteúdo");
 
     expect(actionsContent.add).toHaveBeenCalledWith(1, {
       content: "contentTest",
@@ -180,7 +180,7 @@ describe("hooks: useContent", () => {
       result.current.mutateAsync({
         idContent: 1,
       }),
-    ).rejects.toThrow("Não foi possível editar o conteúdo");
+    ).rejects.toThrow("Não foi possível excluir o conteúdo");
 
     expect(actionsContent.delete).toHaveBeenCalledWith(1);
     expect(invalidateSpy).not.toHaveBeenCalled();

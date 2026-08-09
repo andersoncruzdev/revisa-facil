@@ -103,6 +103,9 @@ export default function AddContentModal({
       onClose={onClose}
       isSubmitting={addContent.isPending || updateContent.isPending}
       submitLabel={contentToEdit ? "Salvar alterações" : "Enviar"}
+      errorMessage={
+        (contentToEdit ? updateContent.error : addContent.error)?.message
+      }
     />
   );
 }

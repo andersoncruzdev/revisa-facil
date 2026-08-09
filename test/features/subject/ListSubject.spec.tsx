@@ -133,6 +133,20 @@ describe("Testes de verificação do 'ListSubject'", () => {
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
+  it("exibe o erro ao falhar ao excluir uma matéria", () => {
+    setupSubjectHooks();
+    vi.mocked(useSubject.delete).mockReturnValue({
+      mutate: vi.fn(),
+      error: new Error("Não foi possível excluir a matéria"),
+    } as unknown as DeleteSubjectMutation);
+
+    render(<ListSubject />);
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Não foi possível excluir a matéria",
+    );
+  });
+
   it("edita a matéria selecionada", async () => {
     const user = userEvent.setup();
     const { update } = setupSubjectHooks();

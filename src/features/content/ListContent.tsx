@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { Content } from "@types-app/study";
 import AddContentModal from "./AddContent";
 import { ConfirmDialog } from "@shared/components/ConfirmDialog";
+import { ErrorMessage } from "@shared/components/ErrorMessage";
 
 const fallbackShadowColor = "#a1a1aa";
 
@@ -34,7 +35,8 @@ export default function ListContent({
   if (getContent.data?.length) {
     return (
       <section aria-label="lista de conteúdos" className="mt-6">
-        <div className="flex flex-col gap-4">
+        <ErrorMessage message={deleteContent.error?.message} />
+        <div className={`flex flex-col gap-4 ${deleteContent.error ? "mt-4" : ""}`}>
           {getContent.data.map((content) => {
             const subject = getSubject.data?.find(
               ({ id }) => id === content.subjectId,

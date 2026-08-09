@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Book, CalendarCheck, NotebookText, Settings, TableOfContents } from "lucide-react";
+import { Book, CalendarCheck, ChartSpline, TableOfContents } from "lucide-react";
 import SideBar from "@shared/design-system/SideBar";
 import { SideBarProvider } from "@shared/providers/SideBarProvider";
 import { AddSubjectModal } from "@features/subject/AddSubjectModal";
@@ -11,8 +11,7 @@ export default function RootPage() {
     {name: "Hoje", href: "/", icon: CalendarCheck},
     {name: "Matérias", href: "/subjects", icon: Book},
     {name: "Conteúdos", href: "/content", icon: TableOfContents},
-    {name: "Anotações", href: "/notes", icon: NotebookText},
-    {name: "Intervalos", href: "/intervalos", icon: Settings}
+    {name: "Desempenho", href: "/performance", icon: ChartSpline},
   ]
 
   return (

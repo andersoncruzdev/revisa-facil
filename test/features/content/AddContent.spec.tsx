@@ -63,4 +63,26 @@ describe("AddContentModal", () => {
       expect.objectContaining({ onSuccess: expect.any(Function) }),
     );
   });
+
+  it("exibe o erro ao falhar ao adicionar um conteúdo", () => {
+    vi.mocked(useSubject.get).mockReturnValue({
+      data: [{ id: 1, name: "Português", color: "#000" }],
+    } as ReturnType<typeof useSubject.get>);
+    vi.mocked(useContent.add).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+      error: new Error("Não foi possível adicionar o conteúdo"),
+    } as unknown as ReturnType<typeof useContent.add>);
+    vi.mocked(useContent.update).mockReturnValue({
+      mutate: vi.fn(),
+      isPending: false,
+      error: null,
+    } as unknown as ReturnType<typeof useContent.update>);
+
+    render(<AddContentModal open onClose={vi.fn()} />);
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Não foi possível adicionar o conteúdo",
+    );
+  });
 });

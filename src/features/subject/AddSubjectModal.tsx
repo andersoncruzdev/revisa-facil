@@ -85,6 +85,9 @@ export function AddSubjectModal({
       onClose={onClose}
       isSubmitting={addSubject.isPending || updateSubject.isPending}
       submitLabel={subject ? "Salvar alterações" : "Enviar"}
+      errorMessage={
+        (subject ? updateSubject.error : addSubject.error)?.message
+      }
     />
   );
 }
