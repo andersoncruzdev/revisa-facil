@@ -1,26 +1,26 @@
 import type { FormEvent } from "react";
-import { classroomColors } from "@constants/classroom-colors";
-import { useClassroom } from "@hooks/useClassroom";
+import { subjectColors } from "@constants/subject-colors";
+import { useSubject } from "@hooks/useSubject";
 import { useColor } from "@hooks/useColor";
 import { Colors } from "@shared/components/Colors";
 import { Input } from "@shared/components/Input";
 import { Modal } from "@shared/components/Modal";
-import type { Classroom } from "@types-app/study";
+import type { Subject } from "@types-app/study";
 
-interface AddClassroomModalProps {
+interface AddSubjectModalProps {
   readonly open: boolean;
   readonly onClose: () => void;
-  readonly classroom?: Classroom;
+  readonly subject?: Subject;
 }
 
-export function AddClassroomModal({
+export function AddSubjectModal({
   open,
   onClose,
-  classroom,
-}: AddClassroomModalProps) {
-  const addClassroom = useClassroom.add();
-  const updateClassroom = useClassroom.update();
-  const { selectedColor, setSelectedColor } = useColor(classroom?.color);
+  subject,
+}: AddSubjectModalProps) {
+  const addSubject = useSubject.add();
+  const updateSubject = useSubject.update();
+  const { selectedColor, setSelectedColor } = useColor(subject?.color);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,15 +35,15 @@ export function AddClassroomModal({
     const mutationOptions = {
       onSuccess: () => {
         form.reset();
-        setSelectedColor(classroomColors.azul);
+        setSelectedColor(subjectColors.azul);
         onClose();
       },
     };
 
-    if (classroom) {
-      updateClassroom.mutate(
+    if (subject) {
+      updateSubject.mutate(
         {
-          idClassroom: classroom.id,
+          subjectId: subject.id,
           data: { name, color: selectedColor },
         },
         mutationOptions,
@@ -51,7 +51,7 @@ export function AddClassroomModal({
       return;
     }
 
-    addClassroom.mutate(
+    addSubject.mutate(
       { name, color: selectedColor },
       {
         ...mutationOptions,
@@ -64,10 +64,10 @@ export function AddClassroomModal({
       <Input.Root>
         <Input.TextField
           placeholder="Insira o nome da nova matéria"
-          id="classroom-name-modal"
+          id="subject-name-modal"
           label="Nome da matéria:"
           name="name"
-          defaultValue={classroom?.name}
+          defaultValue={subject?.name}
           required
           autoFocus
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-950 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 motion-reduce:transition-none"
@@ -79,12 +79,12 @@ export function AddClassroomModal({
 
   return (
     <Modal
-      title={classroom ? "Editar matéria" : "Adicionar matéria"}
+      title={subject ? "Editar matéria" : "Adicionar matéria"}
       content={content}
       open={open}
       onClose={onClose}
-      isSubmitting={addClassroom.isPending || updateClassroom.isPending}
-      submitLabel={classroom ? "Salvar alterações" : "Enviar"}
+      isSubmitting={addSubject.isPending || updateSubject.isPending}
+      submitLabel={subject ? "Salvar alterações" : "Enviar"}
     />
   );
 }

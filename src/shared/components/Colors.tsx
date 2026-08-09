@@ -1,21 +1,21 @@
 import {
-  classroomColorOptions,
-  classroomColors,
-  type ClassroomColor,
-} from "@constants/classroom-colors";
+  subjectColorOptions,
+  subjectColors,
+  type SubjectColor,
+} from "@constants/subject-colors";
 
 interface ColorsProps {
   readonly selectedColor?: string;
-  readonly onSelectColor: (color: ClassroomColor) => void;
+  readonly onSelectColor: (color: SubjectColor) => void;
 }
 
 export function Colors({
-  selectedColor = classroomColors.azul,
+  selectedColor = subjectColors.azul,
   onSelectColor,
 }: ColorsProps) {
   return (
     <div aria-label="Cores da matéria" className="flex gap-2">
-      {classroomColorOptions.map((color) => (
+      {subjectColorOptions.map((color) => (
         <button
           key={color.name}
           type="button"

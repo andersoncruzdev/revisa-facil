@@ -1,65 +1,65 @@
 "use client";
 
-import { useClassroom } from "@hooks/useClassroom";
+import { useSubject } from "@hooks/useSubject";
 import { Button } from "@shared/components/Button";
 
 import { Pencil, Plus, Trash } from "lucide-react";
 import { useState } from "react";
-import type { Classroom } from "@types-app/study";
-import { AddClassroomModal } from "./AddClassroomModal";
+import type { Subject } from "@types-app/study";
+import { AddSubjectModal } from "./AddSubjectModal";
 import { ConfirmDialog } from "@shared/components/ConfirmDialog";
 
-interface ListClassroomProps {
-  readonly onAddClassroom?: () => void;
+interface ListSubjectProps {
+  readonly onAddSubject?: () => void;
 }
 
-export default function ListClassroom({
-  onAddClassroom,
-}: ListClassroomProps) {
-  const [classroomToEdit, setClassroomToEdit] = useState<Classroom>();
-  const [classroomToDelete, setClassroomToDelete] = useState<Classroom>();
-  const getClassroom = useClassroom.get();
-  const deleteClassroom = useClassroom.delete();
+export default function ListSubject({
+  onAddSubject,
+}: ListSubjectProps) {
+  const [subjectToEdit, setSubjectToEdit] = useState<Subject>();
+  const [subjectToDelete, setSubjectToDelete] = useState<Subject>();
+  const getSubject = useSubject.get();
+  const deleteSubject = useSubject.delete();
 
   const confirmDelete = () => {
-    if (!classroomToDelete) return;
+    if (!subjectToDelete) return;
 
-    deleteClassroom.mutate({ idClassroom: classroomToDelete.id });
-    setClassroomToDelete(undefined);
+    deleteSubject.mutate({ subjectId: subjectToDelete.id });
+    setSubjectToDelete(undefined);
   };
 
-  if (getClassroom.data?.length) {
+  if (getSubject.data?.length) {
     return (
       <section aria-label="lista de matérias" className="mt-6">
         <div className="flex flex-col gap-4">
-          {getClassroom.data.map((classroom) => (
+          {getSubject.data.map((subject) => (
             <div
-              aria-label={`Divisão da matéria: ${classroom.name}`}
-              key={`${classroom.id}${classroom.color}${classroom.name}`}
+              aria-label={`Divisão da matéria: ${subject.name}`}
+              key={`${subject.id}${subject.color}${subject.name}`}
               className="flex items-center justify-between gap-4 rounded-xl border border-stone-300 bg-white py-6 pl-8 pr-6 sm:py-7 sm:pl-9 sm:pr-7"
-              style={{ boxShadow: `inset 6px 0 0 ${classroom.color}` }}
+              style={{ boxShadow: `inset 6px 0 0 ${subject.color}` }}
             >
               <div className="flex gap-2 items-center">
                 <p className="  font-semibold leading-tight text-blue-950">
-                  {classroom.name.toUpperCase()}
+                  {subject.name.toUpperCase()}
                 </p>
               </div>
               <div className="flex shrink-0 gap-2">
                 <Button.Root
                   type="button"
-                  aria-label={`Editar matéria ${classroom.name}`}
+                  aria-label={`Editar matéria ${subject.name}`}
                   color="slate"
                   rounded
-                  onClick={() => setClassroomToEdit(classroom)}
+                  onClick={() => setSubjectToEdit(subject)}
                 >
                   <Button.Icon icon={Pencil} />
                 </Button.Root>
                 <Button.Root
                   type="button"
-                  aria-label={`Excluir matéria ${classroom.name}`}
+                  aria-label={`Excluir matéria ${subject.name}`}
                   color="red"
                   rounded
-                  onClick={() => setClassroomToDelete(classroom)}
+                  onClick={() => setSubjectToDelete(subject)}
                 >
                   <Button.Icon icon={Trash} />
                 </Button.Root>
@@ -67,19 +67,19 @@ export default function ListClassroom({
             </div>
           ))}
         </div>
-        {classroomToEdit && (
-          <AddClassroomModal
+        {subjectToEdit && (
+          <AddSubjectModal
             open
-            classroom={classroomToEdit}
-            onClose={() => setClassroomToEdit(undefined)}
+            subject={subjectToEdit}
+            onClose={() => setSubjectToEdit(undefined)}
           />
         )}
-        {classroomToDelete && (
+        {subjectToDelete && (
           <ConfirmDialog
             open
             title="Excluir matéria?"
-            description={`Todos os conteúdos vinculados a ${classroomToDelete.name} também serão excluídos.`}
-            onCancel={() => setClassroomToDelete(undefined)}
+            description={`Todos os conteúdos vinculados a ${subjectToDelete.name} também serão excluídos.`}
+            onCancel={() => setSubjectToDelete(undefined)}
             onConfirm={confirmDelete}
           />
         )}
@@ -98,7 +98,7 @@ export default function ListClassroom({
       <p className="mt-1 max-w-lg text-sm leading-6 text-slate-600">
         Cadastre sua primeira matéria para começar a organizar os conteúdos do seu ciclo de estudos.
       </p>
-      <Button.Root type="button" onClick={onAddClassroom} className="mt-5">
+      <Button.Root type="button" onClick={onAddSubject} className="mt-5">
         <Button.Icon icon={Plus} />
         <Button.Text>Adicionar primeira matéria</Button.Text>
       </Button.Root>

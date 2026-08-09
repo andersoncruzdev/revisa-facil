@@ -1,20 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { classroomColorOptions, classroomColors } from "../../../src/constants/classroom-colors";
+import { subjectColorOptions, subjectColors } from "../../../src/constants/subject-colors";
 import { Colors } from "@shared/components/Colors";
 
 describe("Testes de verificação do 'Colors'", () => {
   it("renderiza as opções de cores da matéria", () => {
     render(
       <Colors
-        selectedColor={classroomColors.azul}
+        selectedColor={subjectColors.azul}
         onSelectColor={vi.fn()}
       />,
     );
 
     expect(screen.getByLabelText("Cores da matéria")).toHaveClass("flex", "gap-2");
 
-    classroomColorOptions.forEach((color) => {
+    subjectColorOptions.forEach((color) => {
       const colorButton = screen.getByRole("button", {
         name: `Selecionar cor ${color.name}`,
       });
@@ -27,7 +27,7 @@ describe("Testes de verificação do 'Colors'", () => {
   it("destaca a cor selecionada", () => {
     render(
       <Colors
-        selectedColor={classroomColors.roxo}
+        selectedColor={subjectColors.roxo}
         onSelectColor={vi.fn()}
       />,
     );
@@ -53,7 +53,7 @@ describe("Testes de verificação do 'Colors'", () => {
 
     render(
       <Colors
-        selectedColor={classroomColors.azul}
+        selectedColor={subjectColors.azul}
         onSelectColor={onSelectColor}
       />,
     );
@@ -61,6 +61,6 @@ describe("Testes de verificação do 'Colors'", () => {
     await user.click(screen.getByRole("button", { name: "Selecionar cor rosa" }));
 
     expect(onSelectColor).toHaveBeenCalledTimes(1);
-    expect(onSelectColor).toHaveBeenCalledWith(classroomColors.rosa);
+    expect(onSelectColor).toHaveBeenCalledWith(subjectColors.rosa);
   });
 });

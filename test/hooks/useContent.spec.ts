@@ -49,7 +49,7 @@ describe("hooks: useContent", () => {
     const { result } = useRenderHooks(queryClient, useContent.add);
 
     await result.current.mutateAsync({
-      idClassroom: 1,
+      subjectId: 1,
       data: {
         content: "contentTest",
         studied: "06/06/2026",
@@ -80,7 +80,7 @@ describe("hooks: useContent", () => {
 
     await expect(
       result.current.mutateAsync({
-        idClassroom: 1,
+        subjectId: 1,
         data: {
           content: "contentTest",
           studied: "06/06/2026",

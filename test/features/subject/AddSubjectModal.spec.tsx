@@ -1,34 +1,34 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { classroomColors } from "@constants/classroom-colors";
-import { useClassroom } from "@hooks/useClassroom";
-import { AddClassroomModal } from "@features/classroom/AddClassroomModal";
+import { subjectColors } from "@constants/subject-colors";
+import { useSubject } from "@hooks/useSubject";
+import { AddSubjectModal } from "@features/subject/AddSubjectModal";
 
-vi.mock("@hooks/useClassroom", () => ({
-  useClassroom: {
+vi.mock("@hooks/useSubject", () => ({
+  useSubject: {
     add: vi.fn(),
     update: vi.fn(),
   },
 }));
 
-type AddClassroomMutation = ReturnType<typeof useClassroom.add>;
+type AddSubjectMutation = ReturnType<typeof useSubject.add>;
 
-describe("AddClassroomModal", () => {
+describe("AddSubjectModal", () => {
   it("envia a matéria e fecha após o sucesso", async () => {
     const user = userEvent.setup();
     const mutate = vi.fn();
     const onClose = vi.fn();
 
-    vi.mocked(useClassroom.add).mockReturnValue({
+    vi.mocked(useSubject.add).mockReturnValue({
       mutate,
       isPending: false,
-    } as unknown as AddClassroomMutation);
-    vi.mocked(useClassroom.update).mockReturnValue({
+    } as unknown as AddSubjectMutation);
+    vi.mocked(useSubject.update).mockReturnValue({
       mutate: vi.fn(),
       isPending: false,
-    } as unknown as ReturnType<typeof useClassroom.update>);
+    } as unknown as ReturnType<typeof useSubject.update>);
 
-    render(<AddClassroomModal open onClose={onClose} />);
+    render(<AddSubjectModal open onClose={onClose} />);
 
     await user.type(
       screen.getByRole("textbox", { name: "Nome da matéria:" }),
@@ -38,7 +38,7 @@ describe("AddClassroomModal", () => {
     await user.click(screen.getByRole("button", { name: "Enviar" }));
 
     expect(mutate).toHaveBeenCalledWith(
-      { name: "Matemática", color: classroomColors.rosa },
+      { name: "Matemática", color: subjectColors.rosa },
       expect.objectContaining({ onSuccess: expect.any(Function) }),
     );
 

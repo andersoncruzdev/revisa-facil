@@ -9,7 +9,7 @@ type NavigationBtn = {
 
 const navigationBtns: NavigationBtn[] = [
   { name: "Dashboard", href: "/" },
-  { name: "Matérias", href: "/classrooms" },
+  { name: "Matérias", href: "/subjects" },
   { name: "Conteúdos", href: "/conteudos" },
   { name: "Revisões", href: "/revisoes" },
   { name: "Histórico", href: "/historico" },

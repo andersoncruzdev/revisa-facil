@@ -5,7 +5,7 @@ import HomePage from "@features/home";
 import ContentPage from "@features/content";
 import NotesPage from "@features/notes";
 import IntervalsPage from "@features/intervalos";
-import ClassroomPage from "@features/classroom/Classroom";
+import SubjectPage from "@features/subject/Subject";
 
 export const routes = [
   {
@@ -29,8 +29,8 @@ export const routes = [
         element: createElement(IntervalsPage),
       },
       {
-        path: "classrooms",
-        element: createElement(ClassroomPage),
+        path: "subjects",
+        element: createElement(SubjectPage),
       },
     ],
   },

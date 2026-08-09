@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Title } from "@shared/components/Title";
 import { Button } from "@shared/components/Button";
-import ListClassroom from "@features/classroom/ListClassroom";
-import { AddClassroomModal } from "@features/classroom/AddClassroomModal";
+import ListSubject from "@features/subject/ListSubject";
+import { AddSubjectModal } from "@features/subject/AddSubjectModal";
 
-export default function ClassroomPage() {
+export default function SubjectPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -25,9 +25,9 @@ export default function ClassroomPage() {
           <Button.Text>Adicionar matéria</Button.Text>
         </Button.Root>
       </div>
-      <ListClassroom onAddClassroom={() => setIsModalOpen(true)} />
+      <ListSubject onAddSubject={() => setIsModalOpen(true)} />
       {isModalOpen && (
-        <AddClassroomModal
+        <AddSubjectModal
           open
           onClose={() => setIsModalOpen(false)}
         />

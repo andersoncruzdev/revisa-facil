@@ -34,9 +34,9 @@ describe("Testes de verificação do 'Input'", () => {
     render(
       <Input.TextField
         placeholder="Digite a matéria"
-        id="classroom-name"
+        id="subject-name"
         label="Nome da matéria"
-        name="classroomName"
+        name="subjectName"
         onChange={onChange}
       />,
     );

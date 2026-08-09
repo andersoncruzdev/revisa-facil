@@ -1,5 +1,5 @@
 import { StudyStorage } from "@types-app/study";
-import { actionsClassroom } from "@data/classroom";
+import { actionsSubject } from "@data/subject";
 import { actionsStudyStorage } from "@data/study-storage";
 import { afterEach, describe, expect, it, vi, type Mock } from "vitest";
 
@@ -26,14 +26,14 @@ const storageMock: StudyStorage = {
   contents: [
     {
       id: 1,
-      idClassroom: 1,
+      subjectId: 1,
       content: "Direitos e garantias individuais",
       studied: "01/06/2026",
       nextRevision: "07/06/2026",
     },
     {
       id: 2,
-      idClassroom: 2,
+      subjectId: 2,
       content: "Atos administrativos",
       studied: "02/06/2026",
       nextRevision: "08/06/2026",
@@ -41,12 +41,12 @@ const storageMock: StudyStorage = {
   ],
 };
 
-const newClassroom = {
+const newSubject = {
   name: " Direito Penal ",
   color: "#E53935",
 };
 
-describe("Data: classroom", () => {
+describe("Data: subject", () => {
   afterEach(() => {
     vi.resetAllMocks();
   });
@@ -54,7 +54,7 @@ describe("Data: classroom", () => {
   it("deve trazer as matérias da store", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 
-    const result = actionsClassroom.get();
+    const result = actionsSubject.get();
 
     expect(actionsStudyStorage.get).toHaveBeenCalledTimes(1);
     expect(result).toEqual(storageMock.subjects);
@@ -64,7 +64,7 @@ describe("Data: classroom", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
     (actionsStudyStorage.save as Mock).mockReturnValue(true);
 
-    const result = actionsClassroom.add(newClassroom);
+    const result = actionsSubject.add(newSubject);
 
     expect(result).toBe(true);
 
@@ -86,7 +86,7 @@ describe("Data: classroom", () => {
   it("deve falhar ao adicionar matéria de mesmo nome", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 
-    const result = actionsClassroom.add({
+    const result = actionsSubject.add({
       name: " Direito Constitucional ",
       color: "#000",
     });
@@ -99,7 +99,7 @@ describe("Data: classroom", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
     (actionsStudyStorage.save as Mock).mockReturnValue(true);
 
-    const result = actionsClassroom.edit(1, {
+    const result = actionsSubject.edit(1, {
       name: " Direito Civil ",
       color: "#43A047",
     });
@@ -129,7 +129,7 @@ describe("Data: classroom", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
     (actionsStudyStorage.save as Mock).mockReturnValue(true);
 
-    const result = actionsClassroom.edit(1, {
+    const result = actionsSubject.edit(1, {
       color: "#FFFFFF",
     });
 
@@ -156,7 +156,7 @@ describe("Data: classroom", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
     (actionsStudyStorage.save as Mock).mockReturnValue(true);
 
-    const result = actionsClassroom.edit(1, {
+    const result = actionsSubject.edit(1, {
       name: " Direito Constitucional ",
       color: "#FFFFFF",
     });
@@ -168,7 +168,7 @@ describe("Data: classroom", () => {
   it("deve falhar ao editar matéria inexistente", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 
-    const result = actionsClassroom.edit(999, {
+    const result = actionsSubject.edit(999, {
       name: "Direito Civil",
     });
 
@@ -179,7 +179,7 @@ describe("Data: classroom", () => {
   it("deve falhar ao editar matéria para nome já existente", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 
-    const result = actionsClassroom.edit(1, {
+    const result = actionsSubject.edit(1, {
       name: " Direito Administrativo ",
     });
 
@@ -191,7 +191,7 @@ describe("Data: classroom", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
     (actionsStudyStorage.save as Mock).mockReturnValue(true);
 
-    const result = actionsClassroom.delete(1);
+    const result = actionsSubject.delete(1);
 
     expect(result).toBe(true);
 
@@ -206,7 +206,7 @@ describe("Data: classroom", () => {
       contents: [
         {
           id: 2,
-          idClassroom: 2,
+          subjectId: 2,
           content: "Atos administrativos",
           studied: "02/06/2026",
           nextRevision: "08/06/2026",
@@ -218,7 +218,7 @@ describe("Data: classroom", () => {
   it("deve falhar ao deletar matéria inexistente", () => {
     (actionsStudyStorage.get as Mock).mockReturnValue(storageMock);
 
-    const result = actionsClassroom.delete(999);
+    const result = actionsSubject.delete(999);
 
     expect(result).toBe(false);
     expect(actionsStudyStorage.save).not.toHaveBeenCalled();

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Input } from "@shared/components/Input";
 
-const classrooms = [
+const subjects = [
   { id: 1, name: "Português" },
   { id: 2, name: "Matemática" },
 ];
@@ -11,10 +11,10 @@ describe("Select", () => {
   it("renderiza o campo associado ao label com as opções informadas", () => {
     render(
       <Input.Selected
-        id="classroom"
+        id="subject"
         label="Nome da matéria"
-        name="classroom"
-        items={classrooms}
+        name="subject"
+        items={subjects}
         required
       />,
     );
@@ -22,8 +22,8 @@ describe("Select", () => {
     const select = screen.getByRole("combobox", { name: "Nome da matéria" });
     const options = screen.getAllByRole("option");
 
-    expect(select).toHaveAttribute("id", "classroom");
-    expect(select).toHaveAttribute("name", "classroom");
+    expect(select).toHaveAttribute("id", "subject");
+    expect(select).toHaveAttribute("name", "subject");
     expect(select).toBeRequired();
     expect(options).toHaveLength(2);
     expect(options[0]).toHaveValue("1");
@@ -38,10 +38,10 @@ describe("Select", () => {
 
     render(
       <Input.Selected
-        id="classroom"
+        id="subject"
         label="Nome da matéria"
-        name="classroom"
-        items={classrooms}
+        name="subject"
+        items={subjects}
         onChange={onChange}
       />,
     );
@@ -58,9 +58,9 @@ describe("Select", () => {
   it("informa quando não há opções", () => {
     render(
       <Input.Selected
-        id="classroom"
+        id="subject"
         label="Nome da matéria"
-        name="classroom"
+        name="subject"
       />,
     );
 

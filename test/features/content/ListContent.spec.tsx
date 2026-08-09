@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ListContent from "@features/content/ListContent";
-import { useClassroom } from "@hooks/useClassroom";
+import { useSubject } from "@hooks/useSubject";
 import { useContent } from "@hooks/useContent";
-import type { Classroom, Content } from "@types-app/study";
+import type { Subject, Content } from "@types-app/study";
 
-vi.mock("@hooks/useClassroom", () => ({
-  useClassroom: {
+vi.mock("@hooks/useSubject", () => ({
+  useSubject: {
     get: vi.fn(),
   },
 }));
@@ -20,15 +20,15 @@ vi.mock("@hooks/useContent", () => ({
   },
 }));
 
-const classrooms = [
+const subjects = [
   { id: 1, name: "Matemática", color: "#2563eb" },
   { id: 2, name: "História", color: "#16a34a" },
-] satisfies Classroom[];
+] satisfies Subject[];
 
 const contents = [
   {
     id: 1,
-    idClassroom: 2,
+    subjectId: 2,
     content: "Brasil Colônia",
     studied: "25/07/2026",
     nextRevision: "31/07/2026",
@@ -37,7 +37,7 @@ const contents = [
 
 const setupHooks = (
   data: Content[] | undefined = contents,
-  classroomData: Classroom[] | undefined = classrooms,
+  subjectData: Subject[] | undefined = subjects,
 ) => {
   const mutate = vi.fn();
   const update = vi.fn();
@@ -56,9 +56,9 @@ const setupHooks = (
     mutate: update,
     isPending: false,
   } as unknown as ReturnType<typeof useContent.update>);
-  vi.mocked(useClassroom.get).mockReturnValue({
-    data: classroomData,
-  } as ReturnType<typeof useClassroom.get>);
+  vi.mocked(useSubject.get).mockReturnValue({
+    data: subjectData,
+  } as ReturnType<typeof useSubject.get>);
 
   return { mutate, update };
 };
@@ -104,10 +104,10 @@ describe("ListContent", () => {
 
   it("oferece cadastrar uma matéria antes do primeiro conteúdo", async () => {
     const user = userEvent.setup();
-    const onAddClassroom = vi.fn();
+    const onAddSubject = vi.fn();
     setupHooks([], []);
 
-    render(<ListContent onAddClassroom={onAddClassroom} />);
+    render(<ListContent onAddSubject={onAddSubject} />);
 
     expect(
       screen.getByText(
@@ -119,7 +119,7 @@ describe("ListContent", () => {
       screen.getByRole("button", { name: "Adicionar primeira matéria" }),
     );
 
-    expect(onAddClassroom).toHaveBeenCalledTimes(1);
+    expect(onAddSubject).toHaveBeenCalledTimes(1);
   });
 
   it("solicita a exclusão do conteúdo selecionado", async () => {
@@ -190,7 +190,7 @@ describe("ListContent", () => {
         idContent: 1,
         data: {
           content: "Brasil Império",
-          idClassroom: 1,
+          subjectId: 1,
         },
       },
       expect.objectContaining({ onSuccess: expect.any(Function) }),
