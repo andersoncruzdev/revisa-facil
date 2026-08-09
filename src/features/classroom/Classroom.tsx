@@ -25,7 +25,7 @@ export default function ClassroomPage() {
           <Button.Text>Adicionar matéria</Button.Text>
         </Button.Root>
       </div>
-      <ListClassroom />
+      <ListClassroom onAddClassroom={() => setIsModalOpen(true)} />
       {isModalOpen && (
         <AddClassroomModal
           open

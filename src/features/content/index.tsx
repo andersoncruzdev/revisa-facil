@@ -4,9 +4,14 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import AddContentModal from "./AddContent";
 import ListContent from "./ListContent";
+import { AddClassroomModal } from "@features/classroom/AddClassroomModal";
+import { useClassroom } from "@hooks/useClassroom";
 
 export default function ContentPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClassroomModalOpen, setIsClassroomModalOpen] = useState(false);
+  const classrooms = useClassroom.get();
+  const hasClassrooms = Boolean(classrooms.data?.length);
 
   return (
     <section aria-labelledby="content-title">
@@ -18,17 +23,32 @@ export default function ContentPage() {
         />
         <Button.Root
           type="button"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() =>
+            hasClassrooms
+              ? setIsModalOpen(true)
+              : setIsClassroomModalOpen(true)
+          }
           className="w-full shrink-0 sm:w-auto"
         >
           <Button.Icon icon={Plus} />
-          <Button.Text>Adicionar conteúdo</Button.Text>
+          <Button.Text>
+            {hasClassrooms ? "Adicionar conteúdo" : "Adicionar matéria"}
+          </Button.Text>
         </Button.Root>
         {isModalOpen && (
           <AddContentModal open onClose={() => setIsModalOpen(false)} />
         )}
       </div>
-      <ListContent />
+      <ListContent
+        onAddContent={() => setIsModalOpen(true)}
+        onAddClassroom={() => setIsClassroomModalOpen(true)}
+      />
+      {isClassroomModalOpen && (
+        <AddClassroomModal
+          open
+          onClose={() => setIsClassroomModalOpen(false)}
+        />
+      )}
     </section>
   );
 }
